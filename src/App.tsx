@@ -3,9 +3,22 @@ import Navbar from './components/Navbar';
 import Documentation from './components/Documentation';
 import Quizzes from './components/Quizzes';
 import CodeEditor from './components/CodeEditor';
+import Problems from './components/Problems';
+import ProblemSolver from './components/ProblemSolver';
+import Leaderboard from './components/Leaderboard';
+import { CodingProblem } from './lib/supabase';
 
 function App() {
-  const [activeView, setActiveView] = useState<'docs' | 'quizzes' | 'editor'>('docs');
+  const [activeView, setActiveView] = useState<'docs' | 'quizzes' | 'editor' | 'problems' | 'leaderboard'>('docs');
+  const [selectedProblem, setSelectedProblem] = useState<CodingProblem | null>(null);
+
+  const handleSelectProblem = (problem: CodingProblem) => {
+    setSelectedProblem(problem);
+  };
+
+  const handleBackToProblems = () => {
+    setSelectedProblem(null);
+  };
 
   return (
     <div className="min-h-screen bg-gray-950">
@@ -14,6 +27,14 @@ function App() {
         {activeView === 'docs' && <Documentation />}
         {activeView === 'quizzes' && <Quizzes />}
         {activeView === 'editor' && <CodeEditor />}
+        {activeView === 'problems' && (
+          selectedProblem ? (
+            <ProblemSolver problem={selectedProblem} onBack={handleBackToProblems} />
+          ) : (
+            <Problems onSelectProblem={handleSelectProblem} />
+          )
+        )}
+        {activeView === 'leaderboard' && <Leaderboard />}
       </main>
     </div>
   );
