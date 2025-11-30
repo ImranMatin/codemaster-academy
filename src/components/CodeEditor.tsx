@@ -33,47 +33,59 @@ export default function CodeEditor() {
     setOutput('Click "Run Code" to execute your code...');
   };
 
-  const handleRunCode = () => {
+  const handleRunCode = async () => {
     setIsRunning(true);
-    setOutput('');
+    setOutput('Executing code...');
 
-    setTimeout(() => {
-      try {
-        if (language === 'javascript') {
-          const logs: string[] = [];
-          const originalLog = console.log;
-          console.log = (...args) => {
-            logs.push(args.map(arg =>
-              typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
-            ).join(' '));
-          };
+    try {
+      if (language === 'javascript') {
+        const logs: string[] = [];
+        const originalLog = console.log;
+        console.log = (...args) => {
+          logs.push(args.map(arg =>
+            typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
+          ).join(' '));
+        };
 
-          try {
-            eval(code);
-            console.log = originalLog;
-            setOutput(logs.length > 0 ? logs.join('\n') : 'Code executed successfully (no output)');
-          } catch (error) {
-            console.log = originalLog;
-            setOutput(`Error: ${error instanceof Error ? error.message : String(error)}`);
-          }
-        } else if (language === 'python') {
-          setOutput(
-            'Python execution is not available in the browser.\n\n' +
-            'To run Python code:\n' +
-            '1. Install Python from python.org\n' +
-            '2. Save your code to a .py file\n' +
-            '3. Run: python filename.py\n\n' +
-            'Or use online Python interpreters like:\n' +
-            '- replit.com\n' +
-            '- python.org/shell'
-          );
+        try {
+          const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
+          const fn = new AsyncFunction(code);
+          await fn();
+          console.log = originalLog;
+          setOutput(logs.length > 0 ? logs.join('\n') : 'Code executed successfully (no output)');
+        } catch (error) {
+          console.log = originalLog;
+          setOutput(`Error: ${error instanceof Error ? error.message : String(error)}`);
         }
-      } catch (error) {
-        setOutput(`Error: ${error instanceof Error ? error.message : String(error)}`);
-      } finally {
-        setIsRunning(false);
+      } else if (language === 'python') {
+        try {
+          const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/execute-python`;
+
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+            },
+            body: JSON.stringify({ code }),
+          });
+
+          const result = await response.json();
+
+          if (result.error) {
+            setOutput(`Error:\n${result.error}`);
+          } else {
+            setOutput(result.output || 'Code executed successfully (no output)');
+          }
+        } catch (error) {
+          setOutput(`Network Error: ${error instanceof Error ? error.message : String(error)}\n\nPlease ensure the server is running and accessible.`);
+        }
       }
-    }, 300);
+    } catch (error) {
+      setOutput(`Error: ${error instanceof Error ? error.message : String(error)}`);
+    } finally {
+      setIsRunning(false);
+    }
   };
 
   const handleClear = () => {
@@ -199,7 +211,7 @@ export default function CodeEditor() {
           </li>
           <li className="flex items-start gap-2">
             <span className="text-purple-400 mt-1">•</span>
-            <span>Python requires a local installation or online interpreter</span>
+            <span>Python code executes securely on the server with a 5-second timeout</span>
           </li>
           <li className="flex items-start gap-2">
             <span className="text-purple-400 mt-1">•</span>
@@ -207,7 +219,7 @@ export default function CodeEditor() {
           </li>
           <li className="flex items-start gap-2">
             <span className="text-purple-400 mt-1">•</span>
-            <span>Clear button resets the editor to the default template</span>
+            <span>Maximum code length is 10,000 characters for security</span>
           </li>
         </ul>
       </div>
