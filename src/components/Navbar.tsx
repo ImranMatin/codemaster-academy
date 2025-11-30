@@ -1,8 +1,8 @@
-import { Book, Brain, Code2, ListChecks, Trophy } from 'lucide-react';
+import { Book, Brain, Code2, ListChecks, Trophy, MessageSquare, User } from 'lucide-react';
 
 interface NavbarProps {
-  activeView: 'docs' | 'quizzes' | 'editor' | 'problems' | 'leaderboard';
-  setActiveView: (view: 'docs' | 'quizzes' | 'editor' | 'problems' | 'leaderboard') => void;
+  activeView: 'docs' | 'quizzes' | 'editor' | 'problems' | 'leaderboard' | 'interview' | 'profile';
+  setActiveView: (view: 'docs' | 'quizzes' | 'editor' | 'problems' | 'leaderboard' | 'interview' | 'profile') => void;
 }
 
 export default function Navbar({ activeView, setActiveView }: NavbarProps) {
@@ -76,6 +76,30 @@ export default function Navbar({ activeView, setActiveView }: NavbarProps) {
             >
               <Trophy className="w-4 h-4 md:w-5 md:h-5" />
               <span className="text-sm md:text-base">Leaderboard</span>
+            </button>
+
+            <button
+              onClick={() => setActiveView('interview')}
+              className={`flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold transition-all ${
+                activeView === 'interview'
+                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-purple-500/50'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
+              }`}
+            >
+              <MessageSquare className="w-4 h-4 md:w-5 md:h-5" />
+              <span className="text-sm md:text-base">Interview</span>
+            </button>
+
+            <button
+              onClick={() => setActiveView('profile')}
+              className={`flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold transition-all ${
+                activeView === 'profile'
+                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-purple-500/50'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
+              }`}
+            >
+              <User className="w-4 h-4 md:w-5 md:h-5" />
+              <span className="text-sm md:text-base">Profile</span>
             </button>
           </div>
         </div>

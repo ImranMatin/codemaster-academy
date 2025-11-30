@@ -6,10 +6,12 @@ import CodeEditor from './components/CodeEditor';
 import Problems from './components/Problems';
 import ProblemSolver from './components/ProblemSolver';
 import Leaderboard from './components/Leaderboard';
+import MockInterview from './components/MockInterview';
+import Profile from './components/Profile';
 import { CodingProblem } from './lib/supabase';
 
 function App() {
-  const [activeView, setActiveView] = useState<'docs' | 'quizzes' | 'editor' | 'problems' | 'leaderboard'>('docs');
+  const [activeView, setActiveView] = useState<'docs' | 'quizzes' | 'editor' | 'problems' | 'leaderboard' | 'interview' | 'profile'>('docs');
   const [selectedProblem, setSelectedProblem] = useState<CodingProblem | null>(null);
 
   const handleSelectProblem = (problem: CodingProblem) => {
@@ -35,6 +37,8 @@ function App() {
           )
         )}
         {activeView === 'leaderboard' && <Leaderboard />}
+        {activeView === 'interview' && <MockInterview />}
+        {activeView === 'profile' && <Profile />}
       </main>
     </div>
   );
