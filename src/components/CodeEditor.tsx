@@ -211,7 +211,7 @@ export default function CodeEditor() {
           </li>
           <li className="flex items-start gap-2">
             <span className="text-purple-400 mt-1">•</span>
-            <span>Python code executes securely on the server with a 5-second timeout</span>
+            <span>Python code executes securely using Piston API in a sandboxed environment</span>
           </li>
           <li className="flex items-start gap-2">
             <span className="text-purple-400 mt-1">•</span>

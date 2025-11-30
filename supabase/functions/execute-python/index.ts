@@ -48,80 +48,30 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // Create a temporary file for the Python code
-    const tempFile = `/tmp/script_${Date.now()}.py`;
-    await Deno.writeTextFile(tempFile, code);
-
     try {
-      // Execute Python code with timeout and resource limits
-      const command = new Deno.Command('python3', {
-        args: [tempFile],
-        stdout: 'piped',
-        stderr: 'piped',
-        env: {
-          PYTHONUNBUFFERED: '1',
+      // Use Piston API for Python code execution
+      const pistonResponse = await fetch('https://emkc.org/api/v2/piston/execute', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
+        body: JSON.stringify({
+          language: 'python',
+          version: '3.10.0',
+          files: [
+            {
+              name: 'main.py',
+              content: code,
+            },
+          ],
+        }),
       });
 
-      // Set a timeout for execution (5 seconds)
-      const timeoutMs = 5000;
-      const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Execution timeout (5 seconds)')), timeoutMs)
-      );
-
-      const executionPromise = command.output();
-      const output = await Promise.race([executionPromise, timeoutPromise]) as Deno.CommandOutput;
-
-      const stdout = new TextDecoder().decode(output.stdout);
-      const stderr = new TextDecoder().decode(output.stderr);
-
-      // Clean up temp file
-      try {
-        await Deno.remove(tempFile);
-      } catch {
-        // Ignore cleanup errors
-      }
-
-      if (output.success) {
-        return new Response(
-          JSON.stringify({
-            output: stdout || 'Code executed successfully (no output)',
-            error: null,
-          }),
-          {
-            headers: {
-              ...corsHeaders,
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-      } else {
-        return new Response(
-          JSON.stringify({
-            output: stdout,
-            error: stderr || 'Execution failed',
-          }),
-          {
-            headers: {
-              ...corsHeaders,
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-      }
-    } catch (execError) {
-      // Clean up temp file on error
-      try {
-        await Deno.remove(tempFile);
-      } catch {
-        // Ignore cleanup errors
-      }
-
-      if (execError instanceof Error && execError.message.includes('timeout')) {
+      if (!pistonResponse.ok) {
         return new Response(
           JSON.stringify({
             output: '',
-            error: 'Execution timeout: Code took longer than 5 seconds to execute',
+            error: 'Failed to execute code. Please try again.',
           }),
           {
             headers: {
@@ -132,6 +82,39 @@ Deno.serve(async (req: Request) => {
         );
       }
 
+      const result = await pistonResponse.json();
+
+      const output = result.run?.stdout || '';
+      const error = result.run?.stderr || '';
+
+      if (error) {
+        return new Response(
+          JSON.stringify({
+            output: output,
+            error: error,
+          }),
+          {
+            headers: {
+              ...corsHeaders,
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+      }
+
+      return new Response(
+        JSON.stringify({
+          output: output || 'Code executed successfully (no output)',
+          error: null,
+        }),
+        {
+          headers: {
+            ...corsHeaders,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+    } catch (execError) {
       return new Response(
         JSON.stringify({
           output: '',
