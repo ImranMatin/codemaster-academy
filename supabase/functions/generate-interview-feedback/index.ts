@@ -41,9 +41,9 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    const anthropicApiKey = Deno.env.get('ANTHROPIC_API_KEY');
+    const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
     
-    if (!anthropicApiKey) {
+    if (!geminiApiKey) {
       return new Response(
         JSON.stringify({ error: 'AI service not configured' }),
         {
@@ -88,28 +88,31 @@ Guidelines:
 
 Return ONLY valid JSON. No markdown, no extra text.`;
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': anthropicApiKey,
-        'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-3-5-sonnet-20241022',
-        max_tokens: 4000,
-        messages: [
+        contents: [
           {
-            role: 'user',
-            content: prompt,
+            parts: [
+              {
+                text: prompt,
+              },
+            ],
           },
         ],
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 4000,
+        },
       }),
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Anthropic API error:', errorText);
+      console.error('Gemini API error:', errorText);
       return new Response(
         JSON.stringify({ error: 'Failed to generate feedback' }),
         {
@@ -123,11 +126,26 @@ Return ONLY valid JSON. No markdown, no extra text.`;
     }
 
     const data = await response.json();
-    const content = data.content[0].text;
+    const content = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    
+    if (!content) {
+      console.error('No content in Gemini response:', data);
+      return new Response(
+        JSON.stringify({ error: 'Invalid response from AI service' }),
+        {
+          status: 500,
+          headers: {
+            ...corsHeaders,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+    }
     
     let feedback;
     try {
-      feedback = JSON.parse(content);
+      const cleanedContent = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      feedback = JSON.parse(cleanedContent);
     } catch (parseError) {
       console.error('Failed to parse AI response:', content);
       return new Response(
