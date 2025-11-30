@@ -83,7 +83,9 @@ export default function MockInterview() {
       const result = await response.json();
 
       if (result.error || !result.questions) {
-        alert('Failed to generate questions. Please try again.');
+        console.error('API Error:', result.error);
+        console.error('Full response:', result);
+        alert(`Failed to generate questions: ${result.error || 'Unknown error'}. Please check the console for details.`);
         return;
       }
 
@@ -133,7 +135,7 @@ export default function MockInterview() {
       setCurrentAnswer('');
     } catch (error) {
       console.error('Error starting interview:', error);
-      alert('An error occurred. Please try again.');
+      alert(`An error occurred: ${error instanceof Error ? error.message : String(error)}. Please check the console for details.`);
     } finally {
       setLoading(false);
     }
