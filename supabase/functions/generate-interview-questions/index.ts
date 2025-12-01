@@ -11,6 +11,55 @@ interface GenerateQuestionsRequest {
 }
 
 const questionBank: Record<string, Array<{question: string; type: 'technical' | 'behavioral'}>> = {
+  "AI Engineer": [
+    { question: "Explain the difference between deep learning and traditional machine learning. When would you use each approach?", type: "technical" },
+    { question: "How would you approach building a natural language processing system? What models and techniques would you consider?", type: "technical" },
+    { question: "Describe your experience with transformer architectures. How do they differ from RNNs and CNNs?", type: "technical" },
+    { question: "Tell me about a time when you had to optimize an AI model for production deployment. What challenges did you face?", type: "behavioral" },
+    { question: "Describe a situation where your AI solution didn't perform as expected. How did you troubleshoot and improve it?", type: "behavioral" }
+  ],
+  "ML Engineer": [
+    { question: "Explain the entire ML lifecycle from data collection to model deployment. What are the critical steps?", type: "technical" },
+    { question: "How do you approach feature engineering? What techniques do you use to identify important features?", type: "technical" },
+    { question: "Describe your experience with MLOps. How do you ensure model monitoring and retraining in production?", type: "technical" },
+    { question: "Tell me about a time when you had to improve model performance. What strategies did you implement?", type: "behavioral" },
+    { question: "Describe a project where you successfully deployed a machine learning model at scale.", type: "behavioral" }
+  ],
+  "Data Scientist": [
+    { question: "Explain the difference between supervised and unsupervised learning. Give examples of when you'd use each.", type: "technical" },
+    { question: "How do you handle missing data in a dataset? What techniques do you use?", type: "technical" },
+    { question: "What is overfitting in machine learning and how do you prevent it?", type: "technical" },
+    { question: "Tell me about a time when your data analysis led to an important business decision.", type: "behavioral" },
+    { question: "Describe a situation where you had to explain complex technical concepts to non-technical stakeholders.", type: "behavioral" }
+  ],
+  "Data Analyst": [
+    { question: "How do you approach exploratory data analysis? What tools and techniques do you use?", type: "technical" },
+    { question: "Explain the difference between different types of joins in SQL. When would you use each?", type: "technical" },
+    { question: "What data visualization techniques do you use to communicate insights effectively?", type: "technical" },
+    { question: "Tell me about a time when you discovered an important insight from data that changed business strategy.", type: "behavioral" },
+    { question: "Describe a situation where you had to work with messy or incomplete data. How did you handle it?", type: "behavioral" }
+  ],
+  "Data Engineer": [
+    { question: "Explain the difference between ETL and ELT. When would you choose one approach over the other?", type: "technical" },
+    { question: "How do you design data pipelines for scalability and reliability? What patterns do you follow?", type: "technical" },
+    { question: "Describe your experience with big data technologies like Spark or Kafka. What use cases are they best suited for?", type: "technical" },
+    { question: "Tell me about a time when you had to optimize a slow data pipeline. What was your approach?", type: "behavioral" },
+    { question: "Describe a project where you built data infrastructure from scratch. What challenges did you face?", type: "behavioral" }
+  ],
+  "Software Engineer": [
+    { question: "Explain the principles of object-oriented programming. How do you apply them in your code?", type: "technical" },
+    { question: "How would you design a URL shortening service like bit.ly? Walk me through your system design.", type: "technical" },
+    { question: "What is your approach to writing clean, maintainable code? What design patterns do you commonly use?", type: "technical" },
+    { question: "Tell me about the most complex technical problem you've solved. What was your approach?", type: "behavioral" },
+    { question: "Describe a time when you had to refactor legacy code. How did you ensure you didn't break existing functionality?", type: "behavioral" }
+  ],
+  "Software Developer": [
+    { question: "Explain the difference between synchronous and asynchronous programming. When would you use each?", type: "technical" },
+    { question: "How do you approach debugging a complex issue in production? Walk me through your process.", type: "technical" },
+    { question: "What testing strategies do you use to ensure code quality? Describe your experience with unit and integration testing.", type: "technical" },
+    { question: "Tell me about a time when you had to learn a new programming language or framework quickly.", type: "behavioral" },
+    { question: "Describe a situation where you disagreed with a technical decision. How did you handle it?", type: "behavioral" }
+  ],
   "Front-End Developer": [
     { question: "Explain the difference between var, let, and const in JavaScript. When would you use each?", type: "technical" },
     { question: "What is the Virtual DOM in React and how does it improve performance?", type: "technical" },
@@ -31,13 +80,6 @@ const questionBank: Record<string, Array<{question: string; type: 'technical' | 
     { question: "How do you ensure code quality across both frontend and backend?", type: "technical" },
     { question: "Tell me about the most challenging full-stack project you've worked on. What made it challenging?", type: "behavioral" },
     { question: "Describe a time when you had to learn a new technology quickly to complete a project.", type: "behavioral" }
-  ],
-  "Data Scientist": [
-    { question: "Explain the difference between supervised and unsupervised learning. Give examples of when you'd use each.", type: "technical" },
-    { question: "How do you handle missing data in a dataset? What techniques do you use?", type: "technical" },
-    { question: "What is overfitting in machine learning and how do you prevent it?", type: "technical" },
-    { question: "Tell me about a time when your data analysis led to an important business decision.", type: "behavioral" },
-    { question: "Describe a situation where you had to explain complex technical concepts to non-technical stakeholders.", type: "behavioral" }
   ],
   "DevOps Engineer": [
     { question: "Explain the concept of Infrastructure as Code. What tools have you used for this?", type: "technical" },
