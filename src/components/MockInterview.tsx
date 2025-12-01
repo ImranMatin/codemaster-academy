@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { Briefcase, Clock, PlayCircle, MessageSquare, Video, ArrowRight } from 'lucide-react';
+import { Briefcase, Clock, PlayCircle, MessageSquare, Video, ArrowRight, Lock } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 
 interface InterviewQuestion {
   question: string;
@@ -17,6 +18,7 @@ interface SessionData {
 }
 
 export default function MockInterview() {
+  const { user, loading: authLoading } = useAuth();
   const [sessionState, setSessionState] = useState<'select' | 'active' | 'feedback'>('select');
   const [selectedRole, setSelectedRole] = useState('');
   const [sessionData, setSessionData] = useState<SessionData | null>(null);
@@ -90,12 +92,16 @@ export default function MockInterview() {
       }
 
       const { data: { user } } = await supabase.auth.getUser();
-      const userId = user?.id || null;
+
+      if (!user) {
+        alert('You must be logged in to use the mock interview feature.');
+        return;
+      }
 
       const { data: session, error } = await supabase
         .from('interview_sessions')
         .insert({
-          user_id: userId,
+          user_id: user.id,
           role: role.title,
           status: 'in_progress',
           started_at: new Date().toISOString(),
@@ -104,6 +110,7 @@ export default function MockInterview() {
         .single();
 
       if (error || !session) {
+        console.error('Session creation error:', error);
         alert('Failed to create session. Please try again.');
         return;
       }
@@ -458,6 +465,47 @@ export default function MockInterview() {
                 )}
               </button>
             </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (authLoading) {
+    return (
+      <div className="max-w-6xl mx-auto text-center py-12">
+        <div className="text-gray-400">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+            Mock Interview
+          </h2>
+          <p className="text-gray-400 text-lg">
+            Practice your interview skills with AI-powered feedback
+          </p>
+        </div>
+
+        <div className="bg-gray-900 rounded-2xl shadow-2xl border border-purple-900/30 p-8 md:p-12 text-center">
+          <div className="flex justify-center mb-6">
+            <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+              <Lock className="w-10 h-10 text-white" />
+            </div>
+          </div>
+          <h3 className="text-2xl font-bold text-white mb-4">
+            Authentication Required
+          </h3>
+          <p className="text-gray-400 mb-8 max-w-md mx-auto">
+            Please sign in or create an account to access the mock interview feature.
+            Your interview sessions and feedback will be saved to your profile.
+          </p>
+          <div className="text-sm text-gray-500">
+            Click the "Sign In" button in the top navigation to get started
           </div>
         </div>
       </div>
