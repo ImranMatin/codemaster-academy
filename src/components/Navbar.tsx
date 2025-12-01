@@ -19,9 +19,12 @@ export default function Navbar({ activeView, setActiveView }: NavbarProps) {
           <div className="flex items-center justify-between py-4">
             <div className="flex items-center">
               <Code2 className="w-8 h-8 text-purple-500 mr-3" />
-              <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                The Dev Vault
-              </h1>
+              <div>
+                <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                  CodeMaster Academy
+                </h1>
+                <p className="text-xs md:text-sm text-gray-400 font-semibold">Learn, Code, & Test</p>
+              </div>
             </div>
 
             <div className="flex flex-wrap justify-center gap-2">
