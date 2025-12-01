@@ -36,19 +36,39 @@ Whether you're a beginner starting your coding journey or an experienced develop
 
 ### 🎤 Mock Interviews
 - AI-powered technical interview practice
-- Generate interview questions based on job roles and experience levels
+- 12 specialized interview roles:
+  - AI Engineer
+  - ML Engineer
+  - Data Scientist
+  - Data Analyst
+  - Data Engineer
+  - Software Engineer
+  - Software Developer
+  - Front-End Developer
+  - Back-End Developer
+  - Full-Stack Developer
+  - DevOps Engineer
+  - Product Manager
+- 5 curated questions per role (3 technical + 2 behavioral)
+- Real-world interview scenarios
 - Receive detailed feedback on your answers
 - Build confidence for real interviews
 
 ### 🗺️ Career Roadmap
 - Detailed career paths for:
-  - Machine Learning Engineer
-  - Data Scientist
-  - Software Engineer
+  - ML Engineer
   - AI Engineer
+  - Data Scientist
+  - Data Analyst
+  - Data Engineer
+  - Software Engineer
+  - Software Developer
+  - Full-Stack Developer
+  - DevOps Engineer
 - Phase-by-phase learning progression
 - Curated learning resources and links
 - Skill requirements and timelines
+- Industry-relevant skill breakdowns
 
 ### 🏆 Leaderboard
 - Track your progress and rankings
@@ -277,15 +297,16 @@ If you need help or have questions:
 
 ## 🎯 Future Roadmap
 
-- [ ] Add more programming languages to code editor
+- [ ] Add more programming languages to code editor (Java, C++, JavaScript)
 - [ ] Implement peer code review system
 - [ ] Create mobile app version
 - [ ] Add collaborative coding sessions
 - [ ] Integrate video tutorials
 - [ ] Expand quiz question bank
-- [ ] Add more career paths to roadmap
 - [ ] Implement achievement badges and rewards
 - [ ] Create company-specific interview prep tracks
+- [ ] Add live coding interview simulations
+- [ ] Integrate AI-powered code review and suggestions
 
 ---
 
