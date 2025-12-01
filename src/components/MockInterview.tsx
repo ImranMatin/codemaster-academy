@@ -29,6 +29,48 @@ export default function MockInterview() {
 
   const roles = [
     {
+      id: 'ai-engineer',
+      title: 'AI Engineer',
+      description: 'Deep Learning, NLP, Computer Vision, AI Systems',
+      icon: '🤖',
+    },
+    {
+      id: 'ml-engineer',
+      title: 'ML Engineer',
+      description: 'Machine Learning, Model Deployment, MLOps',
+      icon: '🧠',
+    },
+    {
+      id: 'data-scientist',
+      title: 'Data Scientist',
+      description: 'Python, ML, Statistics, Data Analysis',
+      icon: '📊',
+    },
+    {
+      id: 'data-analyst',
+      title: 'Data Analyst',
+      description: 'SQL, BI Tools, Data Visualization, Analytics',
+      icon: '📈',
+    },
+    {
+      id: 'data-engineer',
+      title: 'Data Engineer',
+      description: 'ETL Pipelines, Big Data, Spark, Data Warehousing',
+      icon: '🔧',
+    },
+    {
+      id: 'software-engineer',
+      title: 'Software Engineer',
+      description: 'System Design, Algorithms, Architecture, Scalability',
+      icon: '💼',
+    },
+    {
+      id: 'software-developer',
+      title: 'Software Developer',
+      description: 'Coding, Testing, Debugging, Application Development',
+      icon: '👨‍💻',
+    },
+    {
       id: 'frontend-developer',
       title: 'Front-End Developer',
       description: 'React, JavaScript, HTML/CSS, UI/UX',
@@ -45,12 +87,6 @@ export default function MockInterview() {
       title: 'Full-Stack Developer',
       description: 'End-to-end web development skills',
       icon: '🚀',
-    },
-    {
-      id: 'data-scientist',
-      title: 'Data Scientist',
-      description: 'Python, ML, Statistics, Data Analysis',
-      icon: '📊',
     },
     {
       id: 'devops-engineer',
