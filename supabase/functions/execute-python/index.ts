@@ -34,7 +34,6 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // Security: Limit code length
     if (code.length > 10000) {
       return new Response(
         JSON.stringify({ error: 'Code exceeds maximum length of 10000 characters' }),
@@ -49,7 +48,6 @@ Deno.serve(async (req: Request) => {
     }
 
     try {
-      // Use Piston API for Python code execution
       const pistonResponse = await fetch('https://emkc.org/api/v2/piston/execute', {
         method: 'POST',
         headers: {
