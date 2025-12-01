@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Play, Trash2 } from 'lucide-react';
+import { Play, Trash2, ChevronDown } from 'lucide-react';
 
-type Language = 'python' | 'javascript';
+type Language = 'python' | 'javascript' | 'java' | 'cpp';
 
 const defaultCode = {
   python: `# Welcome to The Forge - Python Editor
@@ -18,7 +18,35 @@ function greet(name) {
   return \`Hello, \${name}!\`;
 }
 
-console.log(greet("Developer"));`
+console.log(greet("Developer"));`,
+  java: `// Welcome to The Forge - Java Editor
+// Write your Java code here
+
+public class Main {
+    public static void main(String[] args) {
+        String name = "Developer";
+        System.out.println("Hello, " + name + "!");
+    }
+}`,
+  cpp: `// Welcome to The Forge - C++ Editor
+// Write your C++ code here
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string name = "Developer";
+    cout << "Hello, " << name << "!" << endl;
+    return 0;
+}`
+};
+
+const languageLabels = {
+  python: { icon: '🐍', name: 'Python' },
+  javascript: { icon: '⚡', name: 'JavaScript' },
+  java: { icon: '☕', name: 'Java' },
+  cpp: { icon: '⚙️', name: 'C++' }
 };
 
 export default function CodeEditor() {
@@ -26,6 +54,7 @@ export default function CodeEditor() {
   const [code, setCode] = useState(defaultCode[language]);
   const [output, setOutput] = useState('Click "Run Code" to execute your code...');
   const [isRunning, setIsRunning] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleLanguageChange = (lang: Language) => {
     setLanguage(lang);
@@ -57,7 +86,7 @@ export default function CodeEditor() {
           console.log = originalLog;
           setOutput(`Error: ${error instanceof Error ? error.message : String(error)}`);
         }
-      } else if (language === 'python') {
+      } else {
         try {
           const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/execute-python`;
 
@@ -67,7 +96,7 @@ export default function CodeEditor() {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
             },
-            body: JSON.stringify({ code }),
+            body: JSON.stringify({ code, language }),
           });
 
           const result = await response.json();
@@ -93,29 +122,6 @@ export default function CodeEditor() {
     setOutput('Click "Run Code" to execute your code...');
   };
 
-  const highlightSyntax = (code: string, lang: Language): string => {
-    let highlighted = code;
-
-    if (lang === 'python') {
-      highlighted = highlighted
-        .replace(/\b(def|class|if|else|elif|for|while|return|import|from|as|try|except|finally|with|lambda|yield|pass|break|continue|raise|True|False|None)\b/g, '<span class="text-purple-400 font-semibold">$1</span>')
-        .replace(/\b(print|len|range|str|int|float|list|dict|set|tuple|open|input)\b/g, '<span class="text-blue-400">$1</span>')
-        .replace(/(#.*$)/gm, '<span class="text-green-500 italic">$1</span>')
-        .replace(/(".*?"|'.*?')/g, '<span class="text-amber-400">$1</span>')
-        .replace(/\b(\d+)\b/g, '<span class="text-cyan-400">$1</span>');
-    } else if (lang === 'javascript') {
-      highlighted = highlighted
-        .replace(/\b(function|const|let|var|if|else|for|while|return|import|export|from|as|try|catch|finally|async|await|class|new|this|typeof|instanceof|true|false|null|undefined)\b/g, '<span class="text-purple-400 font-semibold">$1</span>')
-        .replace(/\b(console|document|window|Array|Object|String|Number|Boolean|Math|Date|JSON)\b/g, '<span class="text-blue-400">$1</span>')
-        .replace(/(\/\/.*$)/gm, '<span class="text-green-500 italic">$1</span>')
-        .replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="text-green-500 italic">$1</span>')
-        .replace(/(".*?"|'.*?'|`.*?`)/g, '<span class="text-amber-400">$1</span>')
-        .replace(/\b(\d+)\b/g, '<span class="text-cyan-400">$1</span>');
-    }
-
-    return highlighted;
-  };
-
   return (
     <div className="max-w-7xl mx-auto">
       <div className="text-center mb-8 md:mb-12">
@@ -130,27 +136,37 @@ export default function CodeEditor() {
       <div className="bg-gray-900 rounded-2xl shadow-2xl border border-purple-900/30 overflow-hidden">
         <div className="bg-gray-800 px-4 md:px-6 py-4 border-b border-purple-900/30">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="flex gap-2">
+            <div className="relative">
               <button
-                onClick={() => handleLanguageChange('python')}
-                className={`px-4 md:px-6 py-2 rounded-lg font-semibold transition-all text-sm md:text-base ${
-                  language === 'python'
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
-                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                }`}
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                className="flex items-center gap-2 px-4 md:px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold transition-all text-sm md:text-base hover:shadow-lg hover:shadow-purple-500/50"
               >
-                🐍 Python
+                <span>{languageLabels[language].icon}</span>
+                <span>{languageLabels[language].name}</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
               </button>
-              <button
-                onClick={() => handleLanguageChange('javascript')}
-                className={`px-4 md:px-6 py-2 rounded-lg font-semibold transition-all text-sm md:text-base ${
-                  language === 'javascript'
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
-                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                }`}
-              >
-                ⚡ JavaScript
-              </button>
+
+              {dropdownOpen && (
+                <div className="absolute top-full left-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-20 overflow-hidden">
+                  {(Object.keys(languageLabels) as Language[]).map((lang) => (
+                    <button
+                      key={lang}
+                      onClick={() => {
+                        handleLanguageChange(lang);
+                        setDropdownOpen(false);
+                      }}
+                      className={`w-full flex items-center gap-2 px-4 py-3 text-left transition-colors ${
+                        language === lang
+                          ? 'bg-purple-900/30 text-white'
+                          : 'text-gray-300 hover:bg-gray-700'
+                      }`}
+                    >
+                      <span>{languageLabels[lang].icon}</span>
+                      <span className="font-medium">{languageLabels[lang].name}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="flex gap-2">
@@ -211,11 +227,11 @@ export default function CodeEditor() {
           </li>
           <li className="flex items-start gap-2">
             <span className="text-purple-400 mt-1">•</span>
-            <span>Python code executes securely using Piston API in a sandboxed environment</span>
+            <span>Python, Java, and C++ code executes securely using Piston API in a sandboxed environment</span>
           </li>
           <li className="flex items-start gap-2">
             <span className="text-purple-400 mt-1">•</span>
-            <span>Use console.log() in JavaScript or print() in Python to see output</span>
+            <span>Use console.log() in JavaScript, print() in Python, System.out.println() in Java, or cout in C++</span>
           </li>
           <li className="flex items-start gap-2">
             <span className="text-purple-400 mt-1">•</span>

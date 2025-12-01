@@ -1,8 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Play, Trash2, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { Play, Trash2, ArrowLeft, CheckCircle2, ChevronDown } from 'lucide-react';
 import { supabase, CodingProblem } from '../lib/supabase';
 
-type Language = 'python' | 'javascript';
+type Language = 'python' | 'javascript' | 'java' | 'cpp';
+
+const languageLabels = {
+  python: { icon: '🐍', name: 'Python' },
+  javascript: { icon: '⚡', name: 'JavaScript' },
+  java: { icon: '☕', name: 'Java' },
+  cpp: { icon: '⚙️', name: 'C++' }
+};
 
 interface ProblemSolverProps {
   problem: CodingProblem;
@@ -15,12 +22,17 @@ export default function ProblemSolver({ problem, onBack }: ProblemSolverProps) {
   const [output, setOutput] = useState('Click "Run Code" to execute your solution...');
   const [isRunning, setIsRunning] = useState(false);
   const [isSolved, setIsSolved] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     if (language === 'python') {
       setCode(problem.starter_code_python);
-    } else {
+    } else if (language === 'javascript') {
       setCode(problem.starter_code_javascript);
+    } else if (language === 'java') {
+      setCode((problem as any).starter_code_java || '// Java solution\nclass Solution {\n    public void solve() {\n        // Your code here\n    }\n}');
+    } else if (language === 'cpp') {
+      setCode((problem as any).starter_code_cpp || '// C++ solution\n#include <iostream>\nusing namespace std;\n\nclass Solution {\npublic:\n    void solve() {\n        // Your code here\n    }\n};');
     }
     setOutput('Click "Run Code" to execute your solution...');
   }, [language, problem]);
@@ -61,7 +73,7 @@ export default function ProblemSolver({ problem, onBack }: ProblemSolverProps) {
           setOutput(errorText);
           await recordSubmission('error', errorText);
         }
-      } else if (language === 'python') {
+      } else {
         try {
           const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/execute-python`;
 
@@ -71,7 +83,7 @@ export default function ProblemSolver({ problem, onBack }: ProblemSolverProps) {
               'Content-Type': 'application/json',
               Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
             },
-            body: JSON.stringify({ code }),
+            body: JSON.stringify({ code, language }),
           });
 
           const result = await response.json();
@@ -192,8 +204,12 @@ export default function ProblemSolver({ problem, onBack }: ProblemSolverProps) {
   const handleClear = () => {
     if (language === 'python') {
       setCode(problem.starter_code_python);
-    } else {
+    } else if (language === 'javascript') {
       setCode(problem.starter_code_javascript);
+    } else if (language === 'java') {
+      setCode((problem as any).starter_code_java || '// Java solution\nclass Solution {\n    public void solve() {\n        // Your code here\n    }\n}');
+    } else if (language === 'cpp') {
+      setCode((problem as any).starter_code_cpp || '// C++ solution\n#include <iostream>\nusing namespace std;\n\nclass Solution {\npublic:\n    void solve() {\n        // Your code here\n    }\n};');
     }
     setOutput('Click "Run Code" to execute your solution...');
   };
@@ -313,27 +329,37 @@ export default function ProblemSolver({ problem, onBack }: ProblemSolverProps) {
         <div className="bg-gray-900 rounded-2xl shadow-2xl border border-purple-900/30 overflow-hidden flex flex-col">
           <div className="bg-gray-800 px-4 md:px-6 py-4 border-b border-purple-900/30">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div className="flex gap-2">
+              <div className="relative">
                 <button
-                  onClick={() => handleLanguageChange('python')}
-                  className={`px-4 md:px-6 py-2 rounded-lg font-semibold transition-all text-sm md:text-base ${
-                    language === 'python'
-                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
-                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                  }`}
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className="flex items-center gap-2 px-4 md:px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold transition-all text-sm md:text-base hover:shadow-lg hover:shadow-purple-500/50"
                 >
-                  🐍 Python
+                  <span>{languageLabels[language].icon}</span>
+                  <span>{languageLabels[language].name}</span>
+                  <ChevronDown className={`w-4 h-4 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
-                <button
-                  onClick={() => handleLanguageChange('javascript')}
-                  className={`px-4 md:px-6 py-2 rounded-lg font-semibold transition-all text-sm md:text-base ${
-                    language === 'javascript'
-                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
-                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                  }`}
-                >
-                  ⚡ JavaScript
-                </button>
+
+                {dropdownOpen && (
+                  <div className="absolute top-full left-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-20 overflow-hidden">
+                    {(Object.keys(languageLabels) as Language[]).map((lang) => (
+                      <button
+                        key={lang}
+                        onClick={() => {
+                          handleLanguageChange(lang);
+                          setDropdownOpen(false);
+                        }}
+                        className={`w-full flex items-center gap-2 px-4 py-3 text-left transition-colors ${
+                          language === lang
+                            ? 'bg-purple-900/30 text-white'
+                            : 'text-gray-300 hover:bg-gray-700'
+                        }`}
+                      >
+                        <span>{languageLabels[lang].icon}</span>
+                        <span className="font-medium">{languageLabels[lang].name}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="flex gap-2">

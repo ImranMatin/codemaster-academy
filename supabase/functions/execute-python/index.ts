@@ -8,7 +8,15 @@ const corsHeaders = {
 
 interface ExecuteRequest {
   code: string;
+  language?: string;
 }
+
+const languageMap: Record<string, { language: string; version: string; filename: string }> = {
+  python: { language: 'python', version: '3.10.0', filename: 'main.py' },
+  javascript: { language: 'javascript', version: '18.15.0', filename: 'main.js' },
+  java: { language: 'java', version: '15.0.2', filename: 'Main.java' },
+  cpp: { language: 'c++', version: '10.2.0', filename: 'main.cpp' }
+};
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
@@ -19,7 +27,7 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
-    const { code }: ExecuteRequest = await req.json();
+    const { code, language = 'python' }: ExecuteRequest = await req.json();
 
     if (!code || typeof code !== 'string') {
       return new Response(
@@ -47,6 +55,8 @@ Deno.serve(async (req: Request) => {
       );
     }
 
+    const langConfig = languageMap[language] || languageMap.python;
+
     try {
       const pistonResponse = await fetch('https://emkc.org/api/v2/piston/execute', {
         method: 'POST',
@@ -54,11 +64,11 @@ Deno.serve(async (req: Request) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          language: 'python',
-          version: '3.10.0',
+          language: langConfig.language,
+          version: langConfig.version,
           files: [
             {
-              name: 'main.py',
+              name: langConfig.filename,
               content: code,
             },
           ],
