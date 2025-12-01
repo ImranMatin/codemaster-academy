@@ -1,18 +1,21 @@
 import { useState } from 'react';
-import { Menu, X, Cpu, Database, Code, Brain, ExternalLink, Youtube, BookOpen, BarChart3, Cloud } from 'lucide-react';
+import { Menu, X, Cpu, Database, Code, Brain, ExternalLink, Youtube, BookOpen, BarChart3, Cloud, Layers, Workflow } from 'lucide-react';
 
-type CareerPath = 'ml' | 'data-science' | 'software-engineering' | 'ai' | 'data-analyst' | 'devops';
+type CareerPath = 'ml' | 'data-science' | 'software-engineering' | 'ai' | 'data-analyst' | 'devops' | 'software-developer' | 'fullstack' | 'data-engineer';
 
 export default function CareerRoadmap() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activePath, setActivePath] = useState<CareerPath>('ml');
 
   const navItems: { id: CareerPath; label: string; icon: typeof Brain; bgColor: string }[] = [
-    { id: 'ml', label: 'Machine Learning', icon: Brain, bgColor: 'bg-emerald-600 hover:bg-emerald-700' },
-    { id: 'data-science', label: 'Data Science', icon: Database, bgColor: 'bg-blue-600 hover:bg-blue-700' },
-    { id: 'software-engineering', label: 'Software Engineering', icon: Code, bgColor: 'bg-orange-600 hover:bg-orange-700' },
-    { id: 'ai', label: 'Artificial Intelligence', icon: Cpu, bgColor: 'bg-rose-600 hover:bg-rose-700' },
+    { id: 'ml', label: 'ML Engineer', icon: Brain, bgColor: 'bg-emerald-600 hover:bg-emerald-700' },
+    { id: 'ai', label: 'AI Engineer', icon: Cpu, bgColor: 'bg-rose-600 hover:bg-rose-700' },
+    { id: 'data-science', label: 'Data Scientist', icon: Database, bgColor: 'bg-blue-600 hover:bg-blue-700' },
     { id: 'data-analyst', label: 'Data Analyst', icon: BarChart3, bgColor: 'bg-cyan-600 hover:bg-cyan-700' },
+    { id: 'data-engineer', label: 'Data Engineer', icon: Workflow, bgColor: 'bg-teal-600 hover:bg-teal-700' },
+    { id: 'software-engineering', label: 'Software Engineer', icon: Code, bgColor: 'bg-orange-600 hover:bg-orange-700' },
+    { id: 'software-developer', label: 'Software Developer', icon: Code, bgColor: 'bg-amber-600 hover:bg-amber-700' },
+    { id: 'fullstack', label: 'Full-Stack Developer', icon: Layers, bgColor: 'bg-sky-600 hover:bg-sky-700' },
     { id: 'devops', label: 'DevOps Engineer', icon: Cloud, bgColor: 'bg-violet-600 hover:bg-violet-700' },
   ];
 
@@ -24,7 +27,7 @@ export default function CareerRoadmap() {
     resources: { name: string; url: string; type: 'article' | 'video' | 'course' }[];
   }> = {
     'ml': {
-      title: 'Machine Learning Engineer',
+      title: 'ML Engineer',
       description: 'Machine Learning Engineers design, build, and deploy ML models that solve real-world problems. This path combines software engineering with statistical modeling and data analysis.',
       diagram: 'Image of Machine Learning roadmap diagram showing progression from foundations to advanced ML topics',
       phases: [
@@ -126,7 +129,7 @@ export default function CareerRoadmap() {
       ]
     },
     'ai': {
-      title: 'Artificial Intelligence Engineer',
+      title: 'AI Engineer',
       description: 'AI Engineers develop intelligent systems that can perceive, learn, reason, and act. This cutting-edge field combines ML, deep learning, robotics, and cognitive computing.',
       diagram: 'Image of AI career roadmap showing evolution from ML basics to advanced AI systems and research',
       phases: [
@@ -227,6 +230,111 @@ export default function CareerRoadmap() {
         { name: 'KodeKloud', url: 'https://kodekloud.com/', type: 'course' },
         { name: 'AWS DevOps Blog', url: 'https://aws.amazon.com/blogs/devops/', type: 'article' },
         { name: 'DevOps Roadmap', url: 'https://roadmap.sh/devops', type: 'article' },
+      ]
+    },
+    'software-developer': {
+      title: 'Software Developer',
+      description: 'Software Developers write, test, and maintain code to create software applications. They work on implementing features, fixing bugs, and collaborating with teams to deliver quality software products.',
+      diagram: 'Image of Software Developer career path showing progression from coding basics to professional development practices',
+      phases: [
+        {
+          title: 'Coding Fundamentals (2-4 months)',
+          skills: ['Programming Language (Python, Java, C#, or JavaScript)', 'Basic Syntax & Logic', 'Variables, Data Types & Operators', 'Control Flow (If/Else, Loops)', 'Functions & Methods'],
+          duration: '2-4 months'
+        },
+        {
+          title: 'Development Essentials (4-6 months)',
+          skills: ['Object-Oriented Programming', 'Data Structures (Arrays, Lists, Maps)', 'File I/O & Exception Handling', 'Basic Algorithms', 'Git & Version Control', 'IDE Proficiency'],
+          duration: '4-6 months'
+        },
+        {
+          title: 'Application Development (6-12 months)',
+          skills: ['Web Development Basics', 'Database Fundamentals (SQL)', 'API Integration', 'Testing & Debugging', 'Code Documentation', 'Agile Methodologies'],
+          duration: '6-12 months'
+        },
+        {
+          title: 'Professional Skills',
+          skills: ['Code Reviews & Best Practices', 'Design Patterns', 'Collaborative Development', 'Continuous Learning', 'Problem-Solving', 'Communication Skills'],
+          duration: 'Ongoing'
+        }
+      ],
+      resources: [
+        { name: 'GeeksforGeeks Programming', url: 'https://www.geeksforgeeks.org/fundamentals-of-programming/', type: 'article' },
+        { name: 'Corey Schafer', url: 'https://www.youtube.com/c/Coreyms', type: 'video' },
+        { name: 'Programming with Mosh', url: 'https://www.youtube.com/c/programmingwithmosh', type: 'video' },
+        { name: 'W3Schools', url: 'https://www.w3schools.com/', type: 'article' },
+        { name: 'freeCodeCamp', url: 'https://www.freecodecamp.org/', type: 'course' },
+        { name: 'The Coding Train', url: 'https://www.youtube.com/c/TheCodingTrain', type: 'video' },
+      ]
+    },
+    'fullstack': {
+      title: 'Full-Stack Developer',
+      description: 'Full-Stack Developers work on both frontend and backend, building complete web applications from user interface to server and database. They bridge design and functionality with end-to-end development skills.',
+      diagram: 'Image of Full-Stack Developer roadmap showing integration of frontend, backend, and database technologies',
+      phases: [
+        {
+          title: 'Frontend Foundations (3-6 months)',
+          skills: ['HTML, CSS & JavaScript', 'Responsive Design', 'CSS Frameworks (Tailwind, Bootstrap)', 'DOM Manipulation', 'Frontend Tooling (npm, Webpack)'],
+          duration: '3-6 months'
+        },
+        {
+          title: 'Frontend Frameworks (4-6 months)',
+          skills: ['React, Vue, or Angular', 'State Management (Redux, Zustand)', 'Component Architecture', 'Routing', 'API Consumption', 'TypeScript'],
+          duration: '4-6 months'
+        },
+        {
+          title: 'Backend Development (6-9 months)',
+          skills: ['Node.js/Express or Python/Django', 'RESTful API Design', 'Database Design (SQL & NoSQL)', 'Authentication & Authorization', 'Server Architecture', 'ORMs & Query Optimization'],
+          duration: '6-9 months'
+        },
+        {
+          title: 'Full-Stack Mastery',
+          skills: ['Deployment & Hosting', 'Docker & Containerization', 'CI/CD Pipelines', 'Cloud Services (AWS, Vercel)', 'Testing (Unit, Integration, E2E)', 'Performance Optimization', 'Security Best Practices'],
+          duration: 'Ongoing'
+        }
+      ],
+      resources: [
+        { name: 'GeeksforGeeks Full Stack', url: 'https://www.geeksforgeeks.org/full-stack-development/', type: 'article' },
+        { name: 'Traversy Media', url: 'https://www.youtube.com/c/TraversyMedia', type: 'video' },
+        { name: 'Web Dev Simplified', url: 'https://www.youtube.com/c/WebDevSimplified', type: 'video' },
+        { name: 'FullStack Open', url: 'https://fullstackopen.com/', type: 'course' },
+        { name: 'The Odin Project', url: 'https://www.theodinproject.com/', type: 'course' },
+        { name: 'Fireship', url: 'https://www.youtube.com/c/Fireship', type: 'video' },
+      ]
+    },
+    'data-engineer': {
+      title: 'Data Engineer',
+      description: 'Data Engineers build and maintain the infrastructure and pipelines that enable data collection, storage, and processing at scale. They create the foundation that allows data scientists and analysts to extract insights.',
+      diagram: 'Image of Data Engineer roadmap showing progression from database fundamentals to big data systems and real-time processing',
+      phases: [
+        {
+          title: 'Foundations (3-6 months)',
+          skills: ['SQL & Database Design', 'Python/Scala Programming', 'Linux & Command Line', 'Data Modeling', 'ETL Concepts', 'Version Control (Git)'],
+          duration: '3-6 months'
+        },
+        {
+          title: 'Data Warehousing (6-9 months)',
+          skills: ['Data Warehouse Architecture', 'Star & Snowflake Schema', 'SQL Optimization', 'NoSQL Databases (MongoDB, Cassandra)', 'Data Quality & Validation', 'Batch Processing'],
+          duration: '6-9 months'
+        },
+        {
+          title: 'Big Data & Streaming (9-12 months)',
+          skills: ['Apache Spark', 'Apache Kafka', 'Airflow & Orchestration', 'Hadoop Ecosystem', 'Stream Processing', 'Data Lakes', 'Distributed Systems'],
+          duration: '9-12 months'
+        },
+        {
+          title: 'Cloud & Advanced',
+          skills: ['Cloud Data Platforms (AWS, GCP, Azure)', 'Infrastructure as Code (Terraform)', 'Data Pipeline Monitoring', 'DataOps', 'Real-Time Analytics', 'Data Governance & Security'],
+          duration: 'Ongoing'
+        }
+      ],
+      resources: [
+        { name: 'GeeksforGeeks Data Engineering', url: 'https://www.geeksforgeeks.org/what-is-data-engineering/', type: 'article' },
+        { name: 'Seattle Data Guy', url: 'https://www.youtube.com/c/SeattleDataGuy', type: 'video' },
+        { name: 'Data Engineering Zoomcamp', url: 'https://github.com/DataTalksClub/data-engineering-zoomcamp', type: 'course' },
+        { name: 'Confluent (Kafka)', url: 'https://www.youtube.com/c/Confluent', type: 'video' },
+        { name: 'Databricks Academy', url: 'https://www.databricks.com/learn', type: 'course' },
+        { name: 'Data Engineering Wiki', url: 'https://dataengineering.wiki/', type: 'article' },
       ]
     }
   };
