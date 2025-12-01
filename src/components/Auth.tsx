@@ -109,7 +109,7 @@ export default function Auth({ onClose }: AuthProps) {
                     }}
                     className="text-purple-400 hover:text-purple-300 text-sm font-semibold transition-colors"
                   >
-                    Forgot?
+                    Forgot Password?
                   </button>
                 )}
               </div>

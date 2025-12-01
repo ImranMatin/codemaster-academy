@@ -71,8 +71,11 @@ Whether you're a beginner starting your coding journey or an experienced develop
   - Data Engineer
   - Software Engineer
   - Software Developer
+  - Frontend Engineer
+  - Backend Engineer
   - Full-Stack Developer
   - DevOps Engineer
+  - Product Manager
 - Phase-by-phase learning progression
 - Curated learning resources and links
 - Skill requirements and timelines
