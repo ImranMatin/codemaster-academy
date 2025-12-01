@@ -10,6 +10,14 @@ Whether you're a beginner starting your coding journey or an experienced develop
 
 ## ✨ Features
 
+### 🏠 Landing Page
+- Beautiful, immersive home page with dynamic background
+- Animated gradient effects with pulsing orbs
+- Interactive feature cards showcasing Learn, Code, & Test pillars
+- Glassmorphism design with smooth animations
+- Professional tech-inspired aesthetic
+- Fully responsive layout
+
 ### 📚 The Vault (Documentation)
 - Comprehensive programming tutorials and documentation
 - Structured learning materials covering fundamental to advanced topics
