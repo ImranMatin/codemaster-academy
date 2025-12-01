@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Menu, X, Cpu, Database, Code, Brain, ExternalLink, Youtube, BookOpen } from 'lucide-react';
+import { Menu, X, Cpu, Database, Code, Brain, ExternalLink, Youtube, BookOpen, BarChart3, Cloud } from 'lucide-react';
 
-type CareerPath = 'ml' | 'data-science' | 'software-engineering' | 'ai';
+type CareerPath = 'ml' | 'data-science' | 'software-engineering' | 'ai' | 'data-analyst' | 'devops';
 
 export default function CareerRoadmap() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -12,6 +12,8 @@ export default function CareerRoadmap() {
     { id: 'data-science', label: 'Data Science', icon: Database, bgColor: 'bg-blue-600 hover:bg-blue-700' },
     { id: 'software-engineering', label: 'Software Engineering', icon: Code, bgColor: 'bg-orange-600 hover:bg-orange-700' },
     { id: 'ai', label: 'Artificial Intelligence', icon: Cpu, bgColor: 'bg-rose-600 hover:bg-rose-700' },
+    { id: 'data-analyst', label: 'Data Analyst', icon: BarChart3, bgColor: 'bg-cyan-600 hover:bg-cyan-700' },
+    { id: 'devops', label: 'DevOps Engineer', icon: Cloud, bgColor: 'bg-violet-600 hover:bg-violet-700' },
   ];
 
   const roadmapContent: Record<CareerPath, {
@@ -155,6 +157,76 @@ export default function CareerRoadmap() {
         { name: 'Two Minute Papers', url: 'https://www.youtube.com/c/K%C3%A1rolyZsolnai', type: 'video' },
         { name: 'TutorialsPoint AI', url: 'https://www.tutorialspoint.com/artificial_intelligence/index.htm', type: 'article' },
         { name: 'Yannic Kilcher', url: 'https://www.youtube.com/c/YannicKilcher', type: 'video' },
+      ]
+    },
+    'data-analyst': {
+      title: 'Data Analyst',
+      description: 'Data Analysts transform raw data into actionable insights that drive business decisions. They work with stakeholders to understand needs, analyze data, and create compelling visualizations and reports.',
+      diagram: 'Image of Data Analyst career path showing progression from basic analysis to advanced analytics and business intelligence',
+      phases: [
+        {
+          title: 'Fundamentals (2-4 months)',
+          skills: ['Excel & Spreadsheets (Advanced Functions, Pivot Tables)', 'SQL & Database Queries', 'Basic Statistics', 'Data Cleaning & Preparation', 'Business Acumen'],
+          duration: '2-4 months'
+        },
+        {
+          title: 'Visualization & Reporting (3-6 months)',
+          skills: ['Data Visualization Tools (Tableau, Power BI)', 'Dashboard Design', 'Chart Selection & Best Practices', 'Report Writing', 'Storytelling with Data'],
+          duration: '3-6 months'
+        },
+        {
+          title: 'Advanced Analysis (6-9 months)',
+          skills: ['Python/R for Analysis', 'Statistical Analysis & Testing', 'Predictive Analytics Basics', 'Data Mining', 'Google Analytics & Web Analytics', 'ETL Processes'],
+          duration: '6-9 months'
+        },
+        {
+          title: 'Business Intelligence',
+          skills: ['Advanced BI Tools', 'Data Warehouse Concepts', 'KPI Development', 'Stakeholder Management', 'Domain-Specific Analytics', 'Automation & Scripting'],
+          duration: 'Ongoing'
+        }
+      ],
+      resources: [
+        { name: 'GeeksforGeeks Data Analytics', url: 'https://www.geeksforgeeks.org/what-is-data-analytics/', type: 'article' },
+        { name: 'Alex The Analyst', url: 'https://www.youtube.com/c/AlexTheAnalyst', type: 'video' },
+        { name: 'Power BI Tutorial by SQLBI', url: 'https://www.youtube.com/c/SQLBI', type: 'video' },
+        { name: 'Mode Analytics SQL Tutorial', url: 'https://mode.com/sql-tutorial/', type: 'article' },
+        { name: 'Tableau Tim', url: 'https://www.youtube.com/c/TableauTim', type: 'video' },
+        { name: 'Data School', url: 'https://www.youtube.com/c/dataschool', type: 'video' },
+      ]
+    },
+    'devops': {
+      title: 'DevOps Engineer',
+      description: 'DevOps Engineers bridge the gap between development and operations, automating and streamlining software delivery. They focus on CI/CD, infrastructure as code, monitoring, and creating reliable, scalable systems.',
+      diagram: 'Image of DevOps career path showing evolution from system administration to cloud architecture and site reliability engineering',
+      phases: [
+        {
+          title: 'Foundation (3-6 months)',
+          skills: ['Linux System Administration', 'Networking Basics', 'Programming (Python, Bash, Go)', 'Git & Version Control', 'Command Line Mastery'],
+          duration: '3-6 months'
+        },
+        {
+          title: 'Core DevOps (6-9 months)',
+          skills: ['CI/CD (Jenkins, GitLab CI, GitHub Actions)', 'Containerization (Docker)', 'Configuration Management (Ansible, Puppet, Chef)', 'Infrastructure as Code (Terraform, CloudFormation)', 'Monitoring & Logging (Prometheus, Grafana, ELK Stack)'],
+          duration: '6-9 months'
+        },
+        {
+          title: 'Cloud & Orchestration (9-12 months)',
+          skills: ['Cloud Platforms (AWS, Azure, GCP)', 'Container Orchestration (Kubernetes)', 'Service Mesh (Istio)', 'Serverless Architecture', 'Security & Compliance', 'Cost Optimization'],
+          duration: '9-12 months'
+        },
+        {
+          title: 'Advanced Practice',
+          skills: ['Site Reliability Engineering (SRE)', 'Chaos Engineering', 'GitOps & ArgoCD', 'Platform Engineering', 'Multi-Cloud Strategy', 'Incident Management'],
+          duration: 'Ongoing'
+        }
+      ],
+      resources: [
+        { name: 'GeeksforGeeks DevOps', url: 'https://www.geeksforgeeks.org/devops-tutorial/', type: 'article' },
+        { name: 'TechWorld with Nana', url: 'https://www.youtube.com/c/TechWorldwithNana', type: 'video' },
+        { name: 'DevOps Toolkit by Viktor Farcic', url: 'https://www.youtube.com/c/DevOpsToolkit', type: 'video' },
+        { name: 'KodeKloud', url: 'https://kodekloud.com/', type: 'course' },
+        { name: 'AWS DevOps Blog', url: 'https://aws.amazon.com/blogs/devops/', type: 'article' },
+        { name: 'DevOps Roadmap', url: 'https://roadmap.sh/devops', type: 'article' },
       ]
     }
   };
