@@ -1,22 +1,25 @@
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Mail, Lock, User, LogIn, UserPlus, X } from 'lucide-react';
+import { supabase } from '../lib/supabase';
+import { Mail, Lock, User, LogIn, UserPlus, X, KeyRound } from 'lucide-react';
 
 interface AuthProps {
   onClose: () => void;
 }
 
 export default function Auth({ onClose }: AuthProps) {
-  const [mode, setMode] = useState<'login' | 'signup'>('login');
+  const [mode, setMode] = useState<'login' | 'signup' | 'forgot'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
   const { signIn, signUp } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setMessage('');
     setLoading(true);
 
     try {
@@ -24,12 +27,20 @@ export default function Auth({ onClose }: AuthProps) {
         const { error } = await signIn(email, password);
         if (error) throw error;
         onClose();
-      } else {
+      } else if (mode === 'signup') {
         const { error } = await signUp(email, password);
         if (error) throw error;
-        setError('');
-        alert('Account created successfully! You can now log in.');
-        setMode('login');
+        setMessage('Account created successfully! You can now log in.');
+        setTimeout(() => {
+          setMode('login');
+          setMessage('');
+        }, 2000);
+      } else if (mode === 'forgot') {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}`,
+        });
+        if (error) throw error;
+        setMessage('Password reset link sent! Check your email.');
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
@@ -50,15 +61,21 @@ export default function Auth({ onClose }: AuthProps) {
 
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <User className="w-8 h-8 text-white" />
+            {mode === 'forgot' ? (
+              <KeyRound className="w-8 h-8 text-white" />
+            ) : (
+              <User className="w-8 h-8 text-white" />
+            )}
           </div>
           <h2 className="text-3xl font-bold text-white mb-2">
-            {mode === 'login' ? 'Welcome Back' : 'Create Account'}
+            {mode === 'login' && 'Welcome Back'}
+            {mode === 'signup' && 'Create Account'}
+            {mode === 'forgot' && 'Reset Password'}
           </h2>
           <p className="text-gray-400">
-            {mode === 'login'
-              ? 'Sign in to continue your learning journey'
-              : 'Start your coding interview preparation'}
+            {mode === 'login' && 'Sign in to continue your learning journey'}
+            {mode === 'signup' && 'Start your coding interview preparation'}
+            {mode === 'forgot' && "We'll send you a password reset link"}
           </p>
         </div>
 
@@ -78,28 +95,51 @@ export default function Auth({ onClose }: AuthProps) {
             </div>
           </div>
 
-          <div>
-            <label className="block text-gray-300 font-semibold mb-2">Password</label>
-            <div className="relative">
-              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-                minLength={6}
-                className="w-full pl-12 pr-4 py-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-purple-500 transition-colors"
-              />
+          {mode !== 'forgot' && (
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-gray-300 font-semibold">Password</label>
+                {mode === 'login' && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMode('forgot');
+                      setError('');
+                      setMessage('');
+                    }}
+                    className="text-purple-400 hover:text-purple-300 text-sm font-semibold transition-colors"
+                  >
+                    Forgot?
+                  </button>
+                )}
+              </div>
+              <div className="relative">
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                  minLength={6}
+                  className="w-full pl-12 pr-4 py-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-purple-500 transition-colors"
+                />
+              </div>
+              {mode === 'signup' && (
+                <p className="text-gray-500 text-sm mt-2">Must be at least 6 characters</p>
+              )}
             </div>
-            {mode === 'signup' && (
-              <p className="text-gray-500 text-sm mt-2">Must be at least 6 characters</p>
-            )}
-          </div>
+          )}
 
           {error && (
             <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
               <p className="text-red-400 text-sm">{error}</p>
+            </div>
+          )}
+
+          {message && (
+            <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+              <p className="text-green-400 text-sm">{message}</p>
             </div>
           )}
 
@@ -115,27 +155,46 @@ export default function Auth({ onClose }: AuthProps) {
                 <LogIn className="w-5 h-5" />
                 Sign In
               </>
-            ) : (
+            ) : mode === 'signup' ? (
               <>
                 <UserPlus className="w-5 h-5" />
                 Create Account
+              </>
+            ) : (
+              <>
+                <KeyRound className="w-5 h-5" />
+                Send Reset Link
               </>
             )}
           </button>
         </form>
 
-        <div className="mt-6 text-center">
-          <button
-            onClick={() => {
-              setMode(mode === 'login' ? 'signup' : 'login');
-              setError('');
-            }}
-            className="text-purple-400 hover:text-purple-300 font-semibold transition-colors"
-          >
-            {mode === 'login'
-              ? "Don't have an account? Sign up"
-              : 'Already have an account? Sign in'}
-          </button>
+        <div className="mt-6 text-center space-y-2">
+          {mode === 'forgot' ? (
+            <button
+              onClick={() => {
+                setMode('login');
+                setError('');
+                setMessage('');
+              }}
+              className="text-purple-400 hover:text-purple-300 font-semibold transition-colors"
+            >
+              Back to Sign In
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                setMode(mode === 'login' ? 'signup' : 'login');
+                setError('');
+                setMessage('');
+              }}
+              className="text-purple-400 hover:text-purple-300 font-semibold transition-colors"
+            >
+              {mode === 'login'
+                ? "Don't have an account? Sign up"
+                : 'Already have an account? Sign in'}
+            </button>
+          )}
         </div>
       </div>
     </div>
