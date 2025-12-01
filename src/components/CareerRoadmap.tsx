@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Menu, X, Cpu, Database, Code, Brain, ExternalLink, Youtube, BookOpen, BarChart3, Cloud, Layers, Workflow } from 'lucide-react';
+import { Menu, X, Cpu, Database, Code, Brain, ExternalLink, Youtube, BookOpen, BarChart3, Cloud, Layers, Workflow, Monitor, Server, Users } from 'lucide-react';
 
-type CareerPath = 'ml' | 'data-science' | 'software-engineering' | 'ai' | 'data-analyst' | 'devops' | 'software-developer' | 'fullstack' | 'data-engineer';
+type CareerPath = 'ml' | 'data-science' | 'software-engineering' | 'ai' | 'data-analyst' | 'devops' | 'software-developer' | 'fullstack' | 'data-engineer' | 'frontend' | 'backend' | 'product-manager';
 
 export default function CareerRoadmap() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -15,8 +15,11 @@ export default function CareerRoadmap() {
     { id: 'data-engineer', label: 'Data Engineer', icon: Workflow, bgColor: 'bg-teal-600 hover:bg-teal-700' },
     { id: 'software-engineering', label: 'Software Engineer', icon: Code, bgColor: 'bg-orange-600 hover:bg-orange-700' },
     { id: 'software-developer', label: 'Software Developer', icon: Code, bgColor: 'bg-amber-600 hover:bg-amber-700' },
+    { id: 'frontend', label: 'Frontend Engineer', icon: Monitor, bgColor: 'bg-pink-600 hover:bg-pink-700' },
+    { id: 'backend', label: 'Backend Engineer', icon: Server, bgColor: 'bg-lime-600 hover:bg-lime-700' },
     { id: 'fullstack', label: 'Full-Stack Developer', icon: Layers, bgColor: 'bg-sky-600 hover:bg-sky-700' },
     { id: 'devops', label: 'DevOps Engineer', icon: Cloud, bgColor: 'bg-violet-600 hover:bg-violet-700' },
+    { id: 'product-manager', label: 'Product Manager', icon: Users, bgColor: 'bg-fuchsia-600 hover:bg-fuchsia-700' },
   ];
 
   const roadmapContent: Record<CareerPath, {
@@ -335,6 +338,111 @@ export default function CareerRoadmap() {
         { name: 'Confluent (Kafka)', url: 'https://www.youtube.com/c/Confluent', type: 'video' },
         { name: 'Databricks Academy', url: 'https://www.databricks.com/learn', type: 'course' },
         { name: 'Data Engineering Wiki', url: 'https://dataengineering.wiki/', type: 'article' },
+      ]
+    },
+    'frontend': {
+      title: 'Frontend Engineer',
+      description: 'Frontend Engineers create engaging, responsive user interfaces and exceptional user experiences. They transform designs into interactive web applications using modern JavaScript frameworks and best practices.',
+      diagram: 'Image of Frontend Engineer roadmap showing progression from HTML/CSS basics to advanced React/Vue development and performance optimization',
+      phases: [
+        {
+          title: 'Web Fundamentals (2-4 months)',
+          skills: ['HTML5 Semantic Markup', 'CSS3 & Flexbox/Grid', 'JavaScript ES6+', 'Responsive Design', 'Browser DevTools', 'Git & GitHub'],
+          duration: '2-4 months'
+        },
+        {
+          title: 'Modern JavaScript (4-6 months)',
+          skills: ['Advanced JavaScript (Closures, Promises, Async/Await)', 'TypeScript', 'Module Bundlers (Webpack, Vite)', 'npm & Package Management', 'Testing (Jest, React Testing Library)', 'Web APIs & Fetch'],
+          duration: '4-6 months'
+        },
+        {
+          title: 'Framework Mastery (6-9 months)',
+          skills: ['React (Hooks, Context, Custom Hooks)', 'State Management (Redux, Zustand, React Query)', 'Component Design Patterns', 'CSS-in-JS (Styled Components, Emotion)', 'Tailwind CSS', 'Next.js or Remix'],
+          duration: '6-9 months'
+        },
+        {
+          title: 'Advanced Frontend',
+          skills: ['Performance Optimization (Code Splitting, Lazy Loading)', 'Web Vitals & Lighthouse', 'Progressive Web Apps (PWA)', 'Accessibility (WCAG, ARIA)', 'Animation (Framer Motion, GSAP)', 'Build Tools & CI/CD', 'Micro-frontends'],
+          duration: 'Ongoing'
+        }
+      ],
+      resources: [
+        { name: 'MDN Web Docs', url: 'https://developer.mozilla.org/', type: 'article' },
+        { name: 'JavaScript.info', url: 'https://javascript.info/', type: 'article' },
+        { name: 'Kevin Powell - CSS', url: 'https://www.youtube.com/@KevinPowell', type: 'video' },
+        { name: 'React Official Tutorial', url: 'https://react.dev/learn', type: 'article' },
+        { name: 'Frontend Masters', url: 'https://frontendmasters.com/', type: 'course' },
+        { name: 'Web Dev Simplified', url: 'https://www.youtube.com/@WebDevSimplified', type: 'video' },
+      ]
+    },
+    'backend': {
+      title: 'Backend Engineer',
+      description: 'Backend Engineers build and maintain server-side logic, databases, and APIs that power web applications. They focus on scalability, security, and performance of application infrastructure.',
+      diagram: 'Image of Backend Engineer roadmap showing progression from API development to distributed systems and microservices architecture',
+      phases: [
+        {
+          title: 'Server Fundamentals (3-6 months)',
+          skills: ['Programming Language (Node.js, Python, Java, or Go)', 'HTTP & RESTful APIs', 'SQL Databases (PostgreSQL, MySQL)', 'Authentication & Authorization', 'Git & Version Control'],
+          duration: '3-6 months'
+        },
+        {
+          title: 'Backend Development (6-9 months)',
+          skills: ['Web Frameworks (Express, Django, Spring Boot)', 'Database Design & ORMs', 'API Design Best Practices', 'NoSQL Databases (MongoDB, Redis)', 'Testing (Unit, Integration)', 'Docker Basics'],
+          duration: '6-9 months'
+        },
+        {
+          title: 'Advanced Backend (9-12 months)',
+          skills: ['Microservices Architecture', 'Message Queues (RabbitMQ, Kafka)', 'Caching Strategies', 'GraphQL', 'Websockets & Real-time Communication', 'API Gateways', 'Load Balancing'],
+          duration: '9-12 months'
+        },
+        {
+          title: 'Distributed Systems',
+          skills: ['System Design & Architecture', 'Database Sharding & Replication', 'Cloud Infrastructure (AWS, GCP, Azure)', 'Serverless Architecture', 'Monitoring & Logging (DataDog, New Relic)', 'Security Best Practices', 'Performance Optimization'],
+          duration: 'Ongoing'
+        }
+      ],
+      resources: [
+        { name: 'GeeksforGeeks Backend Development', url: 'https://www.geeksforgeeks.org/backend-development/', type: 'article' },
+        { name: 'Hussein Nasser', url: 'https://www.youtube.com/@hnasr', type: 'video' },
+        { name: 'System Design Primer', url: 'https://github.com/donnemartin/system-design-primer', type: 'article' },
+        { name: 'Node.js Tutorial by The Net Ninja', url: 'https://www.youtube.com/watch?v=w-7RQ46RgxU&list=PL4cUxeGkcC9gcy9lrvMJ75z9maRw4byYp', type: 'video' },
+        { name: 'Academind', url: 'https://www.youtube.com/@academind', type: 'video' },
+        { name: 'Backend Development Best Practices', url: 'https://roadmap.sh/backend', type: 'article' },
+      ]
+    },
+    'product-manager': {
+      title: 'Product Manager',
+      description: 'Product Managers bridge business, technology, and user experience to deliver successful products. They define product vision, prioritize features, and collaborate with cross-functional teams to bring products to market.',
+      diagram: 'Image of Product Manager career path showing evolution from product ownership to strategic product leadership',
+      phases: [
+        {
+          title: 'Product Fundamentals (3-6 months)',
+          skills: ['Product Lifecycle Management', 'User Research & Personas', 'Market Analysis', 'Competitive Analysis', 'Basic UX/UI Principles', 'Agile & Scrum Methodologies'],
+          duration: '3-6 months'
+        },
+        {
+          title: 'Core PM Skills (6-9 months)',
+          skills: ['Product Roadmapping', 'Feature Prioritization (RICE, MoSCoW)', 'User Stories & Requirements', 'Wireframing & Prototyping Tools (Figma, Sketch)', 'Data Analytics (SQL, Google Analytics)', 'Stakeholder Management'],
+          duration: '6-9 months'
+        },
+        {
+          title: 'Advanced Product Strategy (9-12 months)',
+          skills: ['Product Strategy & Vision', 'OKRs & KPIs', 'A/B Testing & Experimentation', 'Pricing & Monetization', 'Go-to-Market Strategy', 'Technical Understanding', 'Product Marketing'],
+          duration: '9-12 months'
+        },
+        {
+          title: 'Product Leadership',
+          skills: ['Portfolio Management', 'Product Team Leadership', 'Business Model Innovation', 'Strategic Thinking', 'Cross-functional Collaboration', 'Executive Communication', 'Industry Expertise', 'Change Management'],
+          duration: 'Ongoing'
+        }
+      ],
+      resources: [
+        { name: 'Product School', url: 'https://productschool.com/blog/', type: 'article' },
+        { name: 'Lenny\'s Podcast', url: 'https://www.youtube.com/@LennysPodcast', type: 'video' },
+        { name: 'Product Management Insider', url: 'https://www.youtube.com/@ProductManagementInsider', type: 'video' },
+        { name: 'Mind the Product', url: 'https://www.mindtheproduct.com/', type: 'article' },
+        { name: 'Reforge Product Strategy', url: 'https://www.reforge.com/', type: 'course' },
+        { name: 'Silicon Valley Product Group', url: 'https://www.svpg.com/articles/', type: 'article' },
       ]
     }
   };
