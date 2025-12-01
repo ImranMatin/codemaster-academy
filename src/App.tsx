@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { AuthProvider } from './contexts/AuthContext';
 import Navbar from './components/Navbar';
 import Documentation from './components/Documentation';
 import Quizzes from './components/Quizzes';
@@ -23,24 +24,26 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950">
-      <Navbar activeView={activeView} setActiveView={setActiveView} />
-      <main className="container mx-auto px-4 py-8">
-        {activeView === 'docs' && <Documentation />}
-        {activeView === 'quizzes' && <Quizzes />}
-        {activeView === 'editor' && <CodeEditor />}
-        {activeView === 'problems' && (
-          selectedProblem ? (
-            <ProblemSolver problem={selectedProblem} onBack={handleBackToProblems} />
-          ) : (
-            <Problems onSelectProblem={handleSelectProblem} />
-          )
-        )}
-        {activeView === 'leaderboard' && <Leaderboard />}
-        {activeView === 'interview' && <MockInterview />}
-        {activeView === 'profile' && <Profile />}
-      </main>
-    </div>
+    <AuthProvider>
+      <div className="min-h-screen bg-gray-950">
+        <Navbar activeView={activeView} setActiveView={setActiveView} />
+        <main className="container mx-auto px-4 py-8">
+          {activeView === 'docs' && <Documentation />}
+          {activeView === 'quizzes' && <Quizzes />}
+          {activeView === 'editor' && <CodeEditor />}
+          {activeView === 'problems' && (
+            selectedProblem ? (
+              <ProblemSolver problem={selectedProblem} onBack={handleBackToProblems} />
+            ) : (
+              <Problems onSelectProblem={handleSelectProblem} />
+            )
+          )}
+          {activeView === 'leaderboard' && <Leaderboard />}
+          {activeView === 'interview' && <MockInterview />}
+          {activeView === 'profile' && <Profile />}
+        </main>
+      </div>
+    </AuthProvider>
   );
 }
 

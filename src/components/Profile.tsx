@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { User, Trophy, Code, MessageSquare, Calendar, TrendingUp } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { User, Trophy, Code, MessageSquare, Calendar, TrendingUp, Mail } from 'lucide-react';
 
 interface InterviewSession {
   id: string;
@@ -21,6 +22,7 @@ interface UserStats {
 }
 
 export default function Profile() {
+  const { user } = useAuth();
   const [sessions, setSessions] = useState<InterviewSession[]>([]);
   const [stats, setStats] = useState<UserStats>({
     totalProblems: 0,
@@ -31,22 +33,19 @@ export default function Profile() {
     averageScore: 0,
   });
   const [loading, setLoading] = useState(true);
-  const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchProfileData();
-  }, []);
+    if (user) {
+      fetchProfileData();
+    } else {
+      setLoading(false);
+    }
+  }, [user]);
 
   const fetchProfileData = async () => {
+    if (!user) return;
+
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-
-      if (!user) {
-        setLoading(false);
-        return;
-      }
-
-      setUserId(user.id);
 
       const { data: profile } = await supabase
         .from('user_profiles')
@@ -118,7 +117,7 @@ export default function Profile() {
     );
   }
 
-  if (!userId) {
+  if (!user) {
     return (
       <div className="max-w-4xl mx-auto">
         <div className="bg-gray-900 rounded-2xl shadow-2xl border border-purple-900/30 p-8 text-center">
@@ -127,6 +126,12 @@ export default function Profile() {
           <p className="text-gray-400 mb-6">
             Please sign in to view your profile and track your progress
           </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:shadow-lg hover:shadow-purple-500/50 text-white rounded-lg font-semibold transition-all"
+          >
+            Sign In
+          </button>
         </div>
       </div>
     );
@@ -135,10 +140,16 @@ export default function Profile() {
   return (
     <div className="max-w-6xl mx-auto">
       <div className="text-center mb-8 md:mb-12">
-        <h2 className="text-3xl md:text-5xl font-bold text-white mb-3 md:mb-4">Your Profile</h2>
-        <p className="text-gray-400 text-base md:text-lg">
-          Track your progress and performance
-        </p>
+        <div className="flex items-center justify-center gap-4 mb-4">
+          <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+            <User className="w-10 h-10 text-white" />
+          </div>
+        </div>
+        <h2 className="text-3xl md:text-5xl font-bold text-white mb-3">Your Profile</h2>
+        <div className="flex items-center justify-center gap-2 text-gray-400">
+          <Mail className="w-5 h-5" />
+          <p className="text-base md:text-lg">{user.email}</p>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
