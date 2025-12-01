@@ -1,0 +1,336 @@
+import { useState } from 'react';
+import { Menu, X, Cpu, Database, Code, Brain, ExternalLink, Youtube, BookOpen } from 'lucide-react';
+
+type CareerPath = 'ml' | 'data-science' | 'software-engineering' | 'ai';
+
+export default function CareerRoadmap() {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [activePath, setActivePath] = useState<CareerPath>('ml');
+
+  const navItems: { id: CareerPath; label: string; icon: typeof Brain; bgColor: string }[] = [
+    { id: 'ml', label: 'Machine Learning', icon: Brain, bgColor: 'bg-emerald-600 hover:bg-emerald-700' },
+    { id: 'data-science', label: 'Data Science', icon: Database, bgColor: 'bg-blue-600 hover:bg-blue-700' },
+    { id: 'software-engineering', label: 'Software Engineering', icon: Code, bgColor: 'bg-orange-600 hover:bg-orange-700' },
+    { id: 'ai', label: 'Artificial Intelligence', icon: Cpu, bgColor: 'bg-rose-600 hover:bg-rose-700' },
+  ];
+
+  const roadmapContent: Record<CareerPath, {
+    title: string;
+    description: string;
+    diagram: string;
+    phases: { title: string; skills: string[]; duration: string }[];
+    resources: { name: string; url: string; type: 'article' | 'video' | 'course' }[];
+  }> = {
+    'ml': {
+      title: 'Machine Learning Engineer',
+      description: 'Machine Learning Engineers design, build, and deploy ML models that solve real-world problems. This path combines software engineering with statistical modeling and data analysis.',
+      diagram: 'Image of Machine Learning roadmap diagram showing progression from foundations to advanced ML topics',
+      phases: [
+        {
+          title: 'Foundation (3-6 months)',
+          skills: ['Python Programming', 'Mathematics (Linear Algebra, Calculus, Statistics)', 'Data Structures & Algorithms', 'NumPy & Pandas'],
+          duration: '3-6 months'
+        },
+        {
+          title: 'Core ML Concepts (6-9 months)',
+          skills: ['Supervised Learning (Regression, Classification)', 'Unsupervised Learning (Clustering, Dimensionality Reduction)', 'Model Evaluation & Validation', 'Feature Engineering', 'Scikit-learn'],
+          duration: '6-9 months'
+        },
+        {
+          title: 'Advanced Topics (6-12 months)',
+          skills: ['Deep Learning (Neural Networks, CNNs, RNNs)', 'TensorFlow/PyTorch', 'Natural Language Processing', 'Computer Vision', 'Model Optimization & Deployment'],
+          duration: '6-12 months'
+        },
+        {
+          title: 'Professional Practice',
+          skills: ['MLOps & Model Deployment', 'Cloud Platforms (AWS SageMaker, Google AI Platform)', 'Production ML Systems', 'A/B Testing', 'Model Monitoring'],
+          duration: 'Ongoing'
+        }
+      ],
+      resources: [
+        { name: 'GeeksforGeeks ML Tutorial', url: 'https://www.geeksforgeeks.org/machine-learning/', type: 'article' },
+        { name: 'Andrew Ng - Machine Learning Course', url: 'https://www.youtube.com/watch?v=jGwO_UgTS7I', type: 'video' },
+        { name: 'StatQuest with Josh Starmer', url: 'https://www.youtube.com/c/joshstarmer', type: 'video' },
+        { name: 'TutorialsPoint ML Guide', url: 'https://www.tutorialspoint.com/machine_learning/index.htm', type: 'article' },
+        { name: 'Sentdex - Python ML Tutorials', url: 'https://www.youtube.com/c/sentdex', type: 'video' },
+      ]
+    },
+    'data-science': {
+      title: 'Data Scientist',
+      description: 'Data Scientists extract insights from complex data using statistical methods, machine learning, and visualization. They bridge the gap between technical analysis and business strategy.',
+      diagram: 'Image of Data Science career path showing journey from data analysis to advanced analytics and business intelligence',
+      phases: [
+        {
+          title: 'Fundamentals (3-6 months)',
+          skills: ['Python/R Programming', 'Statistics & Probability', 'SQL & Databases', 'Data Wrangling (Pandas)', 'Excel & Spreadsheets'],
+          duration: '3-6 months'
+        },
+        {
+          title: 'Data Analysis (6-9 months)',
+          skills: ['Exploratory Data Analysis', 'Data Visualization (Matplotlib, Seaborn, Plotly)', 'Statistical Hypothesis Testing', 'Data Cleaning & Preprocessing', 'Business Intelligence Tools'],
+          duration: '6-9 months'
+        },
+        {
+          title: 'Advanced Analytics (6-12 months)',
+          skills: ['Machine Learning Algorithms', 'Predictive Modeling', 'Time Series Analysis', 'A/B Testing', 'Big Data Tools (Spark, Hadoop)'],
+          duration: '6-12 months'
+        },
+        {
+          title: 'Specialization',
+          skills: ['Deep Learning for Analytics', 'Natural Language Processing', 'Recommendation Systems', 'Cloud Data Platforms', 'Data Ethics & Privacy'],
+          duration: 'Ongoing'
+        }
+      ],
+      resources: [
+        { name: 'GeeksforGeeks Data Science', url: 'https://www.geeksforgeeks.org/data-science-tutorial/', type: 'article' },
+        { name: 'Ken Jee - Data Science', url: 'https://www.youtube.com/c/KenJee1', type: 'video' },
+        { name: 'TutorialsPoint Data Science', url: 'https://www.tutorialspoint.com/data_science/index.htm', type: 'article' },
+        { name: 'Krish Naik', url: 'https://www.youtube.com/user/krishnaik06', type: 'video' },
+        { name: 'DataCamp Community', url: 'https://www.datacamp.com/community/tutorials', type: 'course' },
+      ]
+    },
+    'software-engineering': {
+      title: 'Software Engineer',
+      description: 'Software Engineers design, develop, and maintain software systems. This versatile career path spans web development, mobile apps, systems programming, and more.',
+      diagram: 'Image of Software Engineering career path diagram showing progression from junior to senior engineer with different specializations',
+      phases: [
+        {
+          title: 'Programming Basics (3-6 months)',
+          skills: ['Programming Language (Python, JavaScript, Java, or C++)', 'Data Structures & Algorithms', 'Object-Oriented Programming', 'Git & Version Control', 'Command Line'],
+          duration: '3-6 months'
+        },
+        {
+          title: 'Core Development (6-12 months)',
+          skills: ['Web Development (HTML, CSS, JavaScript)', 'Backend Development (Node.js, Django, Spring)', 'Databases (SQL, NoSQL)', 'RESTful APIs', 'Testing & Debugging'],
+          duration: '6-12 months'
+        },
+        {
+          title: 'Advanced Engineering (12-18 months)',
+          skills: ['System Design & Architecture', 'Cloud Computing (AWS, Azure, GCP)', 'DevOps & CI/CD', 'Microservices', 'Performance Optimization', 'Security Best Practices'],
+          duration: '12-18 months'
+        },
+        {
+          title: 'Specialization Tracks',
+          skills: ['Frontend (React, Vue, Angular)', 'Backend (Distributed Systems)', 'Mobile (iOS, Android, React Native)', 'Full-Stack Development', 'Cloud Native Development'],
+          duration: 'Ongoing'
+        }
+      ],
+      resources: [
+        { name: 'GeeksforGeeks DSA', url: 'https://www.geeksforgeeks.org/data-structures/', type: 'article' },
+        { name: 'Traversy Media', url: 'https://www.youtube.com/c/TraversyMedia', type: 'video' },
+        { name: 'FreeCodeCamp', url: 'https://www.youtube.com/c/Freecodecamp', type: 'video' },
+        { name: 'TutorialsPoint Programming', url: 'https://www.tutorialspoint.com/computer_programming/index.htm', type: 'article' },
+        { name: 'The Net Ninja', url: 'https://www.youtube.com/c/TheNetNinja', type: 'video' },
+      ]
+    },
+    'ai': {
+      title: 'Artificial Intelligence Engineer',
+      description: 'AI Engineers develop intelligent systems that can perceive, learn, reason, and act. This cutting-edge field combines ML, deep learning, robotics, and cognitive computing.',
+      diagram: 'Image of AI career roadmap showing evolution from ML basics to advanced AI systems and research',
+      phases: [
+        {
+          title: 'AI Foundations (6-9 months)',
+          skills: ['Python Programming', 'Mathematics (Linear Algebra, Calculus, Probability)', 'Machine Learning Fundamentals', 'Neural Networks Basics', 'Data Processing'],
+          duration: '6-9 months'
+        },
+        {
+          title: 'Deep Learning (6-12 months)',
+          skills: ['Deep Neural Networks', 'Convolutional Neural Networks (CNNs)', 'Recurrent Neural Networks (RNNs)', 'Transformers & Attention Mechanisms', 'TensorFlow/PyTorch'],
+          duration: '6-12 months'
+        },
+        {
+          title: 'AI Specializations (12+ months)',
+          skills: ['Natural Language Processing (NLP)', 'Computer Vision', 'Reinforcement Learning', 'Generative AI (GANs, VAEs)', 'Large Language Models', 'AI Ethics'],
+          duration: '12+ months'
+        },
+        {
+          title: 'Advanced AI Systems',
+          skills: ['Multi-Modal AI', 'AI Safety & Alignment', 'Autonomous Systems', 'AI Research & Publications', 'Edge AI & Model Optimization'],
+          duration: 'Ongoing'
+        }
+      ],
+      resources: [
+        { name: 'GeeksforGeeks AI', url: 'https://www.geeksforgeeks.org/artificial-intelligence/', type: 'article' },
+        { name: 'DeepLearning.AI', url: 'https://www.youtube.com/@Deeplearningai', type: 'video' },
+        { name: 'Two Minute Papers', url: 'https://www.youtube.com/c/K%C3%A1rolyZsolnai', type: 'video' },
+        { name: 'TutorialsPoint AI', url: 'https://www.tutorialspoint.com/artificial_intelligence/index.htm', type: 'article' },
+        { name: 'Yannic Kilcher', url: 'https://www.youtube.com/c/YannicKilcher', type: 'video' },
+      ]
+    }
+  };
+
+  const currentContent = roadmapContent[activePath];
+  const IconComponent = navItems.find(item => item.id === activePath)?.icon || Brain;
+
+  return (
+    <div className="flex h-[calc(100vh-200px)] bg-gray-950">
+      <div
+        className={`${
+          sidebarOpen ? 'w-64' : 'w-0'
+        } transition-all duration-300 overflow-hidden bg-gray-900 border-r border-gray-800`}
+      >
+        <div className="p-4 space-y-2">
+          <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+            <BookOpen className="w-6 h-6 text-purple-500" />
+            Career Paths
+          </h2>
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <button
+                key={item.id}
+                onClick={() => setActivePath(item.id)}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg font-semibold transition-all ${
+                  item.bgColor
+                } text-white ${
+                  activePath === item.id ? 'ring-2 ring-white shadow-lg' : ''
+                }`}
+              >
+                <Icon className="w-5 h-5" />
+                <span className="text-sm">{item.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="flex-1 overflow-y-auto">
+        <div className="sticky top-0 bg-gray-900 border-b border-gray-800 p-4 z-10 flex items-center gap-4">
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="p-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors"
+          >
+            {sidebarOpen ? (
+              <X className="w-6 h-6 text-white" />
+            ) : (
+              <Menu className="w-6 h-6 text-white" />
+            )}
+          </button>
+          <div className="flex items-center gap-3">
+            <IconComponent className="w-8 h-8 text-purple-500" />
+            <h1 className="text-2xl font-bold text-white">{currentContent.title}</h1>
+          </div>
+        </div>
+
+        <div className="p-6 max-w-5xl mx-auto">
+          <div className="bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-purple-900/30 rounded-2xl p-6 mb-8">
+            <p className="text-gray-300 text-lg leading-relaxed">{currentContent.description}</p>
+          </div>
+
+          <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 mb-8">
+            <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <BookOpen className="w-6 h-6 text-blue-500" />
+              Career Roadmap Visualization
+            </h2>
+            <div className="bg-gray-800 rounded-lg p-8 text-center">
+              <div className="text-gray-400 italic mb-2">{currentContent.diagram}</div>
+              <div className="w-full h-64 bg-gradient-to-br from-blue-900/30 to-purple-900/30 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-700">
+                <div className="text-center">
+                  <IconComponent className="w-16 h-16 text-purple-500 mx-auto mb-4" />
+                  <p className="text-gray-500">Roadmap Diagram Placeholder</p>
+                  <p className="text-gray-600 text-sm mt-2">Visual representation of {currentContent.title} path</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+              <Brain className="w-7 h-7 text-emerald-500" />
+              Learning Path & Phases
+            </h2>
+            <div className="space-y-6">
+              {currentContent.phases.map((phase, index) => (
+                <div
+                  key={index}
+                  className="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-purple-900/50 transition-all"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <span className="text-white font-bold text-xl">{index + 1}</span>
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-xl font-bold text-white">{phase.title}</h3>
+                        <span className="px-3 py-1 bg-purple-900/30 text-purple-400 rounded-full text-sm font-semibold">
+                          {phase.duration}
+                        </span>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {phase.skills.map((skill, skillIndex) => (
+                          <span
+                            key={skillIndex}
+                            className="px-3 py-1 bg-gray-800 text-gray-300 rounded-lg text-sm border border-gray-700"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
+            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+              <ExternalLink className="w-7 h-7 text-blue-500" />
+              Learning Resources
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {currentContent.resources.map((resource, index) => {
+                const ResourceIcon = resource.type === 'video' ? Youtube : resource.type === 'course' ? BookOpen : ExternalLink;
+                const typeColors = {
+                  video: 'border-red-900/30 bg-red-900/10',
+                  article: 'border-blue-900/30 bg-blue-900/10',
+                  course: 'border-emerald-900/30 bg-emerald-900/10'
+                };
+                return (
+                  <a
+                    key={index}
+                    href={resource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`flex items-center gap-3 p-4 rounded-lg border ${typeColors[resource.type]} hover:scale-105 transition-all group`}
+                  >
+                    <ResourceIcon className="w-6 h-6 text-purple-400 group-hover:text-purple-300" />
+                    <div className="flex-1">
+                      <div className="text-white font-semibold group-hover:text-purple-300 transition-colors">
+                        {resource.name}
+                      </div>
+                      <div className="text-gray-500 text-xs capitalize">{resource.type}</div>
+                    </div>
+                    <ExternalLink className="w-4 h-4 text-gray-600 group-hover:text-purple-400 transition-colors" />
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="mt-8 bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-purple-900/30 rounded-2xl p-6">
+            <h3 className="text-lg font-bold text-white mb-3">Pro Tips</h3>
+            <ul className="space-y-2 text-gray-300">
+              <li className="flex items-start gap-2">
+                <span className="text-purple-500 mt-1">•</span>
+                <span>Focus on building projects to apply your knowledge practically</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-purple-500 mt-1">•</span>
+                <span>Join online communities and contribute to open-source projects</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-purple-500 mt-1">•</span>
+                <span>Stay updated with the latest trends and research in your field</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-purple-500 mt-1">•</span>
+                <span>Network with professionals through LinkedIn, conferences, and meetups</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
