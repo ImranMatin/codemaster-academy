@@ -106,6 +106,14 @@ Whether you're a beginner starting your coding journey or an experienced develop
 - Three key pillars: Integrated Practice, Career-Driven Structure, and Real-World Readiness
 - Community and support information
 
+### 📧 Contact Us
+- Professional contact form with validation
+- Multiple subject categories (General Inquiry, Technical Support, Partnership Opportunity, Feedback/Suggestion)
+- Automatic submission to Supabase database
+- Success and error feedback messages
+- Contact information and support hours display
+- Works for both authenticated and anonymous users
+
 ## 🛠️ Tech Stack
 
 ### Frontend

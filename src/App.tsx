@@ -11,10 +11,11 @@ import MockInterview from './components/MockInterview';
 import Profile from './components/Profile';
 import CareerRoadmap from './components/CareerRoadmap';
 import AboutUs from './components/AboutUs';
+import ContactUs from './components/ContactUs';
 import { CodingProblem } from './lib/supabase';
 
 function App() {
-  const [activeView, setActiveView] = useState<'home' | 'docs' | 'quizzes' | 'editor' | 'problems' | 'leaderboard' | 'interview' | 'profile' | 'roadmap' | 'about'>('home');
+  const [activeView, setActiveView] = useState<'home' | 'docs' | 'quizzes' | 'editor' | 'problems' | 'leaderboard' | 'interview' | 'profile' | 'roadmap' | 'about' | 'contact'>('home');
   const [selectedProblem, setSelectedProblem] = useState<CodingProblem | null>(null);
 
   const handleSelectProblem = (problem: CodingProblem) => {
@@ -29,7 +30,7 @@ function App() {
     <AuthProvider>
       <div className="min-h-screen bg-gray-950">
         <Navbar activeView={activeView} setActiveView={setActiveView} />
-        <main className={activeView === 'roadmap' || activeView === 'about' ? '' : 'container mx-auto px-4 py-8'}>
+        <main className={activeView === 'roadmap' || activeView === 'about' || activeView === 'contact' ? '' : 'container mx-auto px-4 py-8'}>
           {activeView === 'home' && (
             <div className="relative flex flex-col items-center justify-center min-h-[calc(100vh-200px)] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-950/50 via-gray-950 to-teal-950/50">
@@ -90,6 +91,7 @@ function App() {
           {activeView === 'profile' && <Profile />}
           {activeView === 'roadmap' && <CareerRoadmap />}
           {activeView === 'about' && <AboutUs />}
+          {activeView === 'contact' && <ContactUs />}
         </main>
       </div>
     </AuthProvider>

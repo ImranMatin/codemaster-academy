@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Book, Brain, Code2, ListChecks, Trophy, MessageSquare, User, LogOut, LogIn, Map, Home, Info } from 'lucide-react';
+import { Book, Brain, Code2, ListChecks, Trophy, MessageSquare, User, LogOut, LogIn, Map, Home, Info, Mail } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import Auth from './Auth';
 
 interface NavbarProps {
-  activeView: 'home' | 'docs' | 'quizzes' | 'editor' | 'problems' | 'leaderboard' | 'interview' | 'profile' | 'roadmap' | 'about';
-  setActiveView: (view: 'home' | 'docs' | 'quizzes' | 'editor' | 'problems' | 'leaderboard' | 'interview' | 'profile' | 'roadmap' | 'about') => void;
+  activeView: 'home' | 'docs' | 'quizzes' | 'editor' | 'problems' | 'leaderboard' | 'interview' | 'profile' | 'roadmap' | 'about' | 'contact';
+  setActiveView: (view: 'home' | 'docs' | 'quizzes' | 'editor' | 'problems' | 'leaderboard' | 'interview' | 'profile' | 'roadmap' | 'about' | 'contact') => void;
 }
 
 export default function Navbar({ activeView, setActiveView }: NavbarProps) {
@@ -146,6 +146,18 @@ export default function Navbar({ activeView, setActiveView }: NavbarProps) {
               >
                 <Info className="w-4 h-4 md:w-5 md:h-5" />
                 <span className="text-sm md:text-base">About</span>
+              </button>
+
+              <button
+                onClick={() => setActiveView('contact')}
+                className={`flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold transition-all ${
+                  activeView === 'contact'
+                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-purple-500/50'
+                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
+                }`}
+              >
+                <Mail className="w-4 h-4 md:w-5 md:h-5" />
+                <span className="text-sm md:text-base">Contact</span>
               </button>
 
               {user ? (
