@@ -12,6 +12,7 @@ import Profile from './components/Profile';
 import CareerRoadmap from './components/CareerRoadmap';
 import AboutUs from './components/AboutUs';
 import ContactUs from './components/ContactUs';
+import FAQ from './components/FAQ';
 import { CodingProblem } from './lib/supabase';
 
 function App() {
@@ -74,6 +75,8 @@ function App() {
                   </div>
                 </div>
               </div>
+
+              <FAQ />
             </div>
           )}
           {activeView === 'docs' && <Documentation />}
