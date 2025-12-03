@@ -24,23 +24,29 @@ export default function Auth({ onClose }: AuthProps) {
 
     try {
       if (mode === 'login') {
-        const { error } = await signIn(email, password);
+        const { error } = await signIn(email.trim(), password);
         if (error) throw error;
         onClose();
       } else if (mode === 'signup') {
-        const { error } = await signUp(email, password);
+        const { data, error } = await signUp(email.trim(), password);
         if (error) throw error;
-        setMessage('Account created successfully! You can now log in.');
-        setTimeout(() => {
-          setMode('login');
-          setMessage('');
-        }, 2000);
+
+        // Check if email confirmation is required
+        if (data?.user && !data.session) {
+          setMessage('Account created! Please check your email to confirm your registration before logging in.');
+        } else {
+          setMessage('Account created successfully! You can now log in.');
+          setTimeout(() => {
+            setMode('login');
+            setMessage('');
+          }, 2000);
+        }
       } else if (mode === 'forgot') {
-        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
           redirectTo: `${window.location.origin}`,
         });
         if (error) throw error;
-        setMessage('Password reset link sent! Check your email.');
+        setMessage('Password reset email sent! Please check your inbox and spam folder for the reset link.');
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
