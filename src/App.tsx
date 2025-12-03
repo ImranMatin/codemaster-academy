@@ -13,6 +13,7 @@ import CareerRoadmap from './components/CareerRoadmap';
 import AboutUs from './components/AboutUs';
 import ContactUs from './components/ContactUs';
 import FAQ from './components/FAQ';
+import Footer from './components/Footer';
 import { CodingProblem } from './lib/supabase';
 
 function App() {
@@ -96,6 +97,7 @@ function App() {
           {activeView === 'about' && <AboutUs />}
           {activeView === 'contact' && <ContactUs />}
         </main>
+        <Footer />
       </div>
     </AuthProvider>
   );
