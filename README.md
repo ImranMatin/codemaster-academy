@@ -99,6 +99,13 @@ Whether you're a beginner starting your coding journey or an experienced develop
 - Password reset functionality
 - Protected routes and user sessions
 
+### ℹ️ About Us
+- Mission statement and vision
+- Founder's message from Imran Matin
+- Why choose CodeMaster Academy
+- Three key pillars: Integrated Practice, Career-Driven Structure, and Real-World Readiness
+- Community and support information
+
 ## 🛠️ Tech Stack
 
 ### Frontend
