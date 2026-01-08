@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { AuthProvider } from './contexts/AuthContext';
 import Navbar from './components/Navbar';
 import Documentation from './components/Documentation';
+import Concepts from './components/Concepts';
 import Quizzes from './components/Quizzes';
 import CodeEditor from './components/CodeEditor';
 import Problems from './components/Problems';
@@ -17,7 +18,7 @@ import Footer from './components/Footer';
 import { CodingProblem } from './lib/supabase';
 
 function App() {
-  const [activeView, setActiveView] = useState<'home' | 'docs' | 'quizzes' | 'editor' | 'problems' | 'leaderboard' | 'interview' | 'profile' | 'roadmap' | 'about' | 'contact'>('home');
+  const [activeView, setActiveView] = useState<'home' | 'docs' | 'concepts' | 'quizzes' | 'editor' | 'problems' | 'leaderboard' | 'interview' | 'profile' | 'roadmap' | 'about' | 'contact'>('home');
   const [selectedProblem, setSelectedProblem] = useState<CodingProblem | null>(null);
 
   const handleSelectProblem = (problem: CodingProblem) => {
@@ -81,6 +82,7 @@ function App() {
             </div>
           )}
           {activeView === 'docs' && <Documentation />}
+          {activeView === 'concepts' && <Concepts />}
           {activeView === 'quizzes' && <Quizzes />}
           {activeView === 'editor' && <CodeEditor />}
           {activeView === 'problems' && (
