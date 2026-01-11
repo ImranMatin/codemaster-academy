@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ExternalLink, Youtube, BookOpen } from 'lucide-react';
 
-type Concept = 'oops' | 'dsa' | 'sdlc' | 'agile' | 'cloud' | 'ai' | 'ml';
+type Concept = 'oops' | 'dsa' | 'sdlc' | 'agile' | 'cloud' | 'ai' | 'ml' | 'webdev' | 'aiagents' | 'programming' | 'networks' | 'hpc' | 'database';
 
 interface Resource {
   title: string;
@@ -135,6 +135,108 @@ const conceptData: Record<Concept, ConceptContent> = {
       { title: 'Kaggle Learn - Free ML Courses', url: 'https://www.kaggle.com/learn', type: 'blog' },
       { title: 'Towards Data Science - ML Articles', url: 'https://towardsdatascience.com/', type: 'blog' }
     ]
+  },
+  webdev: {
+    title: 'Web Development',
+    icon: '🌐',
+    summary: [
+      "Web Development involves building websites and web applications using HTML, CSS, and JavaScript. Modern web development separates into frontend (client-side), backend (server-side), and full-stack development. Frontend frameworks like React, Vue, and Angular enable building interactive user interfaces, while backend technologies like Node.js, Python, and Java handle server logic and databases.",
+      "Frontend development focuses on user experience, responsive design, and interactivity. HTML structures content, CSS handles styling, and JavaScript adds dynamic behavior. Popular tools include Webpack, Vite, TypeScript, and testing frameworks. Backend development manages data persistence, authentication, business logic, and API creation. Understanding both layers makes developers more versatile and marketable.",
+      "Web development is constantly evolving with new technologies and best practices. Progressive Web Apps (PWAs), serverless architectures, and JAMstack are reshaping how modern applications are built. Learning web development opens doors to freelancing, startups, and positions at major tech companies. Mastery of full-stack development is highly sought after in today's job market."
+    ],
+    resources: [
+      { title: 'The Complete Web Developer Bootcamp - freeCodeCamp', url: 'https://www.youtube.com/watch?v=Zftx68K-1D4', type: 'video' },
+      { title: 'React Tutorial for Beginners - Academind', url: 'https://www.youtube.com/watch?v=7_V6JD0P-SQ', type: 'video' },
+      { title: 'Full Stack Web Development - Traversy Media', url: 'https://www.youtube.com/watch?v=qQv2t-V2_d0', type: 'video' },
+      { title: 'MDN Web Docs - Web Development Guide', url: 'https://developer.mozilla.org/en-US/', type: 'blog' },
+      { title: 'Web.dev - Learn Web Development', url: 'https://web.dev/learn/', type: 'blog' },
+      { title: 'freeCodeCamp - Responsive Web Design', url: 'https://www.freecodecamp.org/learn/responsive-web-design/', type: 'blog' }
+    ]
+  },
+  aiagents: {
+    title: 'AI Agents',
+    icon: '🤳',
+    summary: [
+      "AI Agents are autonomous systems that perceive their environment, make decisions, and take actions to achieve specific goals. They can be simple (rule-based) or complex (learning-based), ranging from chatbots and virtual assistants to autonomous vehicles and game-playing AIs. AI agents powered by large language models (LLMs) like GPT-4 can understand natural language, reason, and perform multi-step tasks.",
+      "Modern AI agents use technologies like reinforcement learning, prompt engineering, and tool integration to solve complex problems. They can interact with APIs, databases, and other systems to complete tasks autonomously. Applications include customer service bots, content generation, data analysis, code generation, and more. Building AI agents has become accessible with frameworks like LangChain, AutoGPT, and CrewAI.",
+      "Understanding prompt engineering, fine-tuning, and agent architectures is essential for developers working with AI agents. Ethical considerations around AI safety, bias, and transparency are increasingly important. AI agents represent the future of automation and intelligent assistance, making this knowledge valuable for developers entering the AI/ML field."
+    ],
+    resources: [
+      { title: 'AI Agents Explained - IBM Technology', url: 'https://www.youtube.com/watch?v=cKvfPuJpqKo', type: 'video' },
+      { title: 'LangChain Tutorial - Full Guide', url: 'https://www.youtube.com/watch?v=J_0qvRt4LQU', type: 'video' },
+      { title: 'Building AI Agents with Claude', url: 'https://www.youtube.com/watch?v=sXoCLdJMWfY', type: 'video' },
+      { title: 'LangChain Official Documentation', url: 'https://python.langchain.com/docs/get_started/introduction.html', type: 'blog' },
+      { title: 'Prompt Engineering Guide', url: 'https://www.promptingguide.ai/', type: 'blog' },
+      { title: 'OpenAI API Documentation', url: 'https://platform.openai.com/docs/api-reference', type: 'blog' }
+    ]
+  },
+  programming: {
+    title: 'Programming Languages',
+    icon: '💻',
+    summary: [
+      "Programming languages are tools used to write instructions for computers. Each language has its own syntax, paradigms, and strengths. Popular languages include Python (versatile, beginner-friendly), JavaScript (web development), Java (enterprise applications), C++ (performance-critical systems), Go (concurrent systems), and Rust (safety-focused systems). Choosing a language depends on project requirements, performance needs, and ecosystem.",
+      "Python dominates in data science, AI/ML, and automation due to its simplicity and rich libraries. JavaScript rules web development with React, Vue, and Node.js. Java powers large-scale enterprise applications. C++ is essential for game development, systems programming, and performance optimization. Learning multiple languages expands your problem-solving toolkit and career opportunities.",
+      "Modern programming emphasizes clean code, readability, and maintainability over raw functionality. Understanding fundamental concepts like variables, control flow, data structures, and functions transfers across languages. Paradigms like object-oriented, functional, and procedural programming offer different approaches to solving problems. Continuous learning of new languages keeps developers current and adaptable."
+    ],
+    resources: [
+      { title: 'Python for Everybody - freeCodeCamp', url: 'https://www.youtube.com/watch?v=8DvO9XnLBW0', type: 'video' },
+      { title: 'JavaScript Complete Course - Academind', url: 'https://www.youtube.com/watch?v=PkZNo7MFNFg', type: 'video' },
+      { title: 'Java Programming for Beginners - freeCodeCamp', url: 'https://www.youtube.com/watch?v=GoUHwzMBJGg', type: 'video' },
+      { title: 'Python Official Documentation', url: 'https://docs.python.org/3/', type: 'blog' },
+      { title: 'JavaScript.info - Complete JS Guide', url: 'https://javascript.info/', type: 'blog' },
+      { title: 'The Rust Programming Language', url: 'https://doc.rust-lang.org/book/', type: 'blog' }
+    ]
+  },
+  networks: {
+    title: 'Computer Networks',
+    icon: '🔌',
+    summary: [
+      "Computer Networks enable communication between computers and devices over various distances. Networking concepts include the OSI model (7 layers), TCP/IP protocols, DNS, HTTP/HTTPS, IP addressing, routing, and firewalls. Understanding networks is crucial for building distributed systems, debugging connectivity issues, and securing applications. Networks range from LANs (local area networks) to WANs (wide area networks) and the internet.",
+      "Key protocols include TCP (reliable connection), UDP (fast, connectionless), HTTP (web), HTTPS (secure web), FTP (file transfer), and SMTP (email). DNS translates domain names to IP addresses. IPv4 and IPv6 are address schemes. Network security involves encryption, firewalls, VPNs, and intrusion detection. Modern architectures use content delivery networks (CDNs), load balancing, and edge computing.",
+      "Networking knowledge is essential for DevOps engineers, backend developers, and security professionals. Tools like Wireshark, Netcat, and curl help diagnose network issues. Cloud platforms like AWS, Azure, and GCP provide managed networking services. Understanding networks helps optimize performance, ensure reliability, and build resilient applications."
+    ],
+    resources: [
+      { title: 'Computer Networks Explained - Professor Messer', url: 'https://www.youtube.com/watch?v=3QhU9jd6AqE', type: 'video' },
+      { title: 'OSI Model Explained - NetworkChuck', url: 'https://www.youtube.com/watch?v=LANW3m7UBVw', type: 'video' },
+      { title: 'DNS and How It Works - Computerphile', url: 'https://www.youtube.com/watch?v=mpQZVYPuDJo', type: 'video' },
+      { title: 'MDN - HTTP Overview', url: 'https://developer.mozilla.org/en-US/docs/Web/HTTP', type: 'blog' },
+      { title: 'Cisco Networking Academy', url: 'https://www.netacad.com/', type: 'blog' },
+      { title: 'RFC Standards and Protocols', url: 'https://www.rfc-editor.org/', type: 'blog' }
+    ]
+  },
+  hpc: {
+    title: 'High Performance Computing',
+    icon: '⚙️',
+    summary: [
+      "High Performance Computing (HPC) involves using parallel processing, advanced algorithms, and optimized hardware to solve complex computational problems quickly. HPC systems combine multiple processors and GPUs to achieve massive computational power, enabling simulations, data analysis, and AI/ML training at scale. Applications include weather forecasting, molecular dynamics, climate modeling, financial simulations, and scientific research.",
+      "Key HPC concepts include parallelization (OpenMP, MPI), GPU computing (CUDA, OpenCL), distributed computing, memory optimization, and algorithm efficiency. Supercomputers and computing clusters process terabytes of data and perform trillions of calculations. Cloud providers offer HPC services for researchers and enterprises. Understanding HPC is critical for working on large-scale data problems and scientific computing.",
+      "HPC is increasingly important as datasets grow larger and AI/ML models require massive computational resources. Knowledge of performance profiling, optimization techniques, and distributed systems architecture is valuable. Jobs in HPC exist in academia, national labs, tech companies, and enterprises. Learning HPC opens doors to cutting-edge research and high-impact computing projects."
+    ],
+    resources: [
+      { title: 'HPC Fundamentals - XSEDE', url: 'https://www.youtube.com/watch?v=_YJ-KHLY0s0', type: 'video' },
+      { title: 'Parallel Programming with OpenMP - HPC University', url: 'https://www.youtube.com/watch?v=nE-Z0qvzhWg', type: 'video' },
+      { title: 'CUDA Programming Tutorial - NVIDIA', url: 'https://www.youtube.com/watch?v=1l0Zv1TL47M', type: 'video' },
+      { title: 'OpenMP Official Documentation', url: 'https://www.openmp.org/spec-html/5.0/openmpsu1.html', type: 'blog' },
+      { title: 'NVIDIA CUDA Documentation', url: 'https://docs.nvidia.com/cuda/cuda-c-programming-guide/', type: 'blog' },
+      { title: 'Message Passing Interface (MPI) Guide', url: 'https://www.mpi-forum.org/', type: 'blog' }
+    ]
+  },
+  database: {
+    title: 'Database Management',
+    icon: '🗄️',
+    summary: [
+      "Database Management Systems (DBMS) store, organize, and retrieve data efficiently. Relational databases (SQL) like PostgreSQL, MySQL, and Oracle use tables and structured schemas. NoSQL databases (MongoDB, Redis, Cassandra) offer flexible schemas for unstructured data. DBMS choices depend on data structure, query patterns, scalability needs, and consistency requirements.",
+      "Database design involves normalization, indexing, query optimization, and transaction management (ACID properties). SQL is essential for querying relational databases. NoSQL excels for big data, real-time applications, and document storage. Understanding database architecture, replication, sharding, and backup strategies is crucial for building reliable systems. Database administration and optimization are specialized career paths.",
+      "Modern applications increasingly use polyglot persistence—combining multiple database types. Cloud databases (AWS RDS, Azure Cosmos DB, Google Firestore) simplify deployment and scaling. Knowledge of database design, optimization, and security is fundamental for backend developers and data engineers. As data volume grows, database expertise becomes increasingly valuable."
+    ],
+    resources: [
+      { title: 'SQL Tutorial - freeCodeCamp', url: 'https://www.youtube.com/watch?v=HXV3zeQKqGY', type: 'video' },
+      { title: 'PostgreSQL Complete Course - freeCodeCamp', url: 'https://www.youtube.com/watch?v=qw--VYLpxG4', type: 'video' },
+      { title: 'MongoDB Tutorial - TechWith Tim', url: 'https://www.youtube.com/watch?v=ofme2o29ngU', type: 'video' },
+      { title: 'PostgreSQL Official Documentation', url: 'https://www.postgresql.org/docs/', type: 'blog' },
+      { title: 'MongoDB Developer Center', url: 'https://www.mongodb.com/developer/', type: 'blog' },
+      { title: 'Database Design Basics', url: 'https://www.databasestar.com/', type: 'blog' }
+    ]
   }
 };
 
@@ -153,7 +255,7 @@ export default function Concepts() {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2 md:gap-3 mb-8 md:mb-12">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2 md:gap-3 mb-8 md:mb-12 auto-rows-max">
         {(Object.keys(conceptData) as Concept[]).map((concept) => (
           <button
             key={concept}
